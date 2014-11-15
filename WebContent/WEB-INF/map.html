@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Flare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="css/codiqa.ext.min.css" rel="stylesheet">
+  <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
+  <link href="css/flare.css" rel="stylesheet">
+
+  <script src="/js/jquery-1.9.1.min.js"></script>
+  <script src="/js/jquery.mobile-1.3.1.min.js"></script>
+  <script src="/js/codiqa.ext.min.js"></script>
+  <script src="/js/map.js"></script>
+  <script src ="js/flare-utils.js"></script>
+  
+  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+ <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+ <meta charset=utf-8 />
+ 
+</head>
+<body>
+
+
+<!-- ******************* WHERE THE MAP BEGINS ***************************************-->
+
+  <div data-role="page" data-control-title="Map" id="map">
+      <div data-theme="a" data-role="header">
+          <h4>
+              <font color="lightblue">Map View</font>
+          </h4>
+      </div>
+      <div data-role="content">
+          <div id="googlemapsjs1" class="google-map" style="width: 100%; height: 350px; margin-left: auto; margin-right: auto">
+          </div>	  
+      </div>
+      <div data-role="tabbar" data-iconpos="top" data-theme="a">
+          <ul>
+              <li>
+                  <a  onClick= "redirectTo('home')" data-icon="home">
+                  Home
+                  </a>
+              </li>
+              <li>
+                  <a  onClick= "redirectTo('map')" data-icon="star">
+                  Map
+                      
+                  </a>
+              </li>
+              <li>
+               		<a  onClick= "redirectTo('discover')" data-icon="search">
+                    Discover
+                </a>
+              </li>
+              <li>
+                  <a  onClick= "redirectTo('home')" data-icon="check">
+                  Profile
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <!-- ********************************** WHERE THE MAP ENDS ************************** -->
+  
+  
+</body>
+</html>  
+  

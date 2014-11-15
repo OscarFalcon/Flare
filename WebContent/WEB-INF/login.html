@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Flare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="css/codiqa.ext.min.css" rel="stylesheet">
+  <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
+  <link href="css/flare.css" rel="stylesheet">
+
+  <script src="js/jquery-1.9.1.min.js"></script>
+  <script src="js/jquery.mobile-1.3.1.min.js"></script>
+  <script src="js/codiqa.ext.min.js"></script>
+  <script src="js/login.js"></script>
+  
+  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+ <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+ <meta charset=utf-8 />
+ 
+</head>
+<body>
+	<!--  ****************************** WHERE LOGIN PAGE BEGINS ************************* -->
+	  <div data-role="page" data-control-title="Login" data-theme="b" id="page1">
+	      <div data-role="content">
+	          <div style="" data-controltype="image">
+	              <center><img style="width: 200px; height: 75px" src="img/flare_final.png"></center>
+	          </div>
+	          	  <center><div id="error"></div></center>
+		          <div data-role="fieldcontain" data-controltype="textinput">
+		              <center><input name="usernameField" id="usernameField" placeholder="Username" value=""
+		              type="text"></center>
+		          </div>
+		          <div data-role="fieldcontain" data-controltype="textinput">
+		              <center><input name="passwordField" id="passwordField" placeholder="Password" value=""
+		              type="password"></center>
+		          </div>
+		          <input type="button" data-icon="arrow-r" data-iconpos="right" value="login" onclick="validateForm()"
+	          		data-mini="true">
+	      </div>
+	      <div data-theme="a" data-role="footer" data-position="fixed">
+	          <div>
+	              <a href="http://localhost:8080/signup" data-transition="fade">
+              
+	                  <font color="lightblue">Sign up for flare</font>
+	              </a>
+	          </div>
+	          <div>
+	              <a href="#page7" data-transition="fade">
+	                  <font color="lightblue">Can't Sign In?</font>
+	              </a>
+	          </div>
+	      </div>
+	  </div>
+	  <!--  ************************ WHERE LOGIN PAGE ENDS ******************************* -->
+</body>
+</html>
