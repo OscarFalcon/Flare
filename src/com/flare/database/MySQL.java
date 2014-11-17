@@ -20,7 +20,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class MySQL {
 
-	private static final String DATABASE_URL = "jdbc:mysql://70.123.244.148:3306/airport_mngmt_sys";
+	private static final String DATABASE_URL = "jdbc:mysql://70.123.244.148:3306/flare";
 	private static final String MySQLUser = "mike", MySQLPassword = "anableps123";
 	private static Connection connection;
 	private static final BasicDataSource dataSource = new BasicDataSource();
@@ -58,7 +58,8 @@ public class MySQL {
 
     
     /** initializes connection pool settings **/
-	 static{	
+	 static
+	 {	
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUsername(MySQLUser);
 		dataSource.setPassword(MySQLPassword);
