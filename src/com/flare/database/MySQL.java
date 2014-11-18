@@ -38,9 +38,9 @@ public class MySQL {
 	 static
 	 {
 		dataSource = new BasicDataSource();
-		dataSource.setUsername("flare");
-		dataSource.setPassword("anableps!for!life123");
-		dataSource.setUrl("jdbc:mysql://localhost/flare");
+		dataSource.setUsername("root");
+		dataSource.setPassword("anableps123");
+		dataSource.setUrl("jdbc:mysql://70.123.244.148/flare");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setInitialSize(1); 	// sets the initial amount of connections. **/
 		dataSource.setMaxTotal(1); 		//Sets the maximum total number of idle and borrows connections that can be active at the same time. **/
