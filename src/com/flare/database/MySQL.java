@@ -1,6 +1,5 @@
 package com.flare.database;
 
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,30 +18,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 
 public class MySQL {
+	
+	private  static Connection connection = null;
+	private  static BasicDataSource dataSource = null;
 
-	private static final String DATABASE_URL = "jdbc:mysql://70.123.244.148:3306/flare";
-	private static final String MySQLUser = "mike", MySQLPassword = "anableps123";
-	private static Connection connection;
-	private static final BasicDataSource dataSource = new BasicDataSource();
-
-    public static int operationStatus; 						/** success if the SQL statement was executed correctly. **/
-    public static final int OPERATION_FAILED = -1;			/** operation failed **/
-    public static final int OPERATION_SUCCESS = 0;			/** operation success **/
-       
-    public static int errorno; 									/** describes any errors that could arise as below **/
-    public static final int SUCCESS = 0;						/** no error **/
-    public static final int CONNECTION_ERROR = 1;		 		/** error, cannot establish connection to server**/
-    public static final int NO_INTERNET_CONNECTION_ERROR = 2;	/** Internet is not reachable **/
-    public static final int PREPARED_STATEMENT_ERROR = 3; 		/** error in preparing a statement **/
-    public static final int RESULT_SET_ERROR = 4;				/** error in operating with resultSet, usually resultSet.get or resultSet.set methods **/
-    public static final int CLOSE_CONNECTION_ERROR = 5;			/** error in closing a connection **/
-    public static final int IS_CLOSED_CONNECTION_ERROR = 6; 	/** error in calling the isClosed method call for a connection object **/
-    public static final int EXECUTE_QUERY_ERROR = 7; 			/** error in the execution of a prepared statement that returns a result set object**/
-    public static final int EXECUTE_ERROR = 8;					/** error in execution of a prepared statement that does NOT return a result set object **/
-    public static final int OTHER_CLOSE_ERROR = 9;				/** error in the closing of either a prepared statement, or result set object **/
-    public static final int INVALID_ARGUMENTS = 10;				/** error in the argument parameters passed in **/
-    
-  
     
     public static final int BIG_DECIMAL = 0;
     public static final int BOOLEAN = 1;
@@ -55,19 +34,35 @@ public class MySQL {
     public static final int OBJECT = 8;
     public static final int STRING = 9;
     
-
-    
-    /** initializes connection pool settings **/
+ 
 	 static
-	 {	
+	 {
+		dataSource = new BasicDataSource();
+		dataSource.setUsername("flare");
+		dataSource.setPassword("anableps!for!life123");
+		dataSource.setUrl("jdbc:mysql://localhost/flare");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUsername(MySQLUser);
-		dataSource.setPassword(MySQLPassword);
-		dataSource.setUrl(DATABASE_URL);
-		dataSource.setInitialSize(1); 	/** sets the initial amount of connections. **/
-		dataSource.setMaxTotal(1); 		/**Sets the maximum total number of idle and borrows connections that can be active at the same time. **/
-	}
+		dataSource.setInitialSize(1); 	// sets the initial amount of connections. **/
+		dataSource.setMaxTotal(1); 		//Sets the maximum total number of idle and borrows connections that can be active at the same time. **/
+		
+	 }
 	 
+	 
+	 public static void setURL(String url)
+	 {
+		 dataSource.setUrl(url);
+	 }
+	 
+	 public static void setUsername(String username)
+	 {
+		 dataSource.setUsername(username);
+	 }
+	 
+	 public static void setPassword(String password)
+	 {
+		 dataSource.setPassword(password);
+		
+	 }
 	 
 		
 	/**
@@ -77,13 +72,16 @@ public class MySQL {
 	 * error no is either set to CONNECTION_ERROR or NO_INTERNET_CONNECTION_ERROR
 	 */
 	private static boolean connect() {
-		if(isClosed()){
-			try{
+		if(isClosed())
+		{
+			try
+			{
 				connection = dataSource.getConnection();
 			    connection.setAutoCommit(false);
-		   }catch (SQLException e){
-			   errorno = CONNECTION_ERROR;
-			   isInternetReachable(); /** is the server down, or Internet down? **/
+		   }
+			catch (SQLException e)
+			{
+			   isInternetReachable(); // is the server down, or Internet down? 
 			   e.printStackTrace();
 			   return false;
 		   }
@@ -95,14 +93,14 @@ public class MySQL {
 	/**
 	 * disconnects from the MySQL database. If connection is already closed or is null, does nothing
 	 */
-	private static void disconnect(){ 
+	private static void disconnect()
+	{ 
 		if(connection == null)
 			return;
 		try {
 			if(!(connection.isClosed()))
 				connection.close();
 		} catch (SQLException e1) {
-			errorno = CLOSE_CONNECTION_ERROR;
 			e1.printStackTrace();
 		}
 		System.out.println("Disconnected from database");
@@ -114,19 +112,21 @@ public class MySQL {
 	 * might be raised.
 	 * @return TRUE if the connection has been closed, false otherwise.
 	 */
-	private static boolean isClosed(){
+	private static boolean isClosed()
+	{
 		boolean value = false;
 		
 		if(connection == null)
 			return true;
 		
-		try{
+		try
+		{
 			if(connection.isClosed())
 				value = true;
 			else
 				value = false;
-		}catch(SQLException e){
-			errorno = IS_CLOSED_CONNECTION_ERROR;
+		}catch(SQLException e)
+		{
 			e.printStackTrace();
 		}
 		return value;
@@ -141,15 +141,18 @@ public class MySQL {
 	 * This method does not close or open any connections
 	 * 
 	 *  **/
-	private static boolean execute(PreparedStatement ps) {
+	private static boolean execute(PreparedStatement ps) 
+	{
 		if( ps ==null || isClosed() )
 			return false;
-		try {
+		try 
+		{
 			ps.execute();
 			ps.getConnection().commit();
 			return true;
-		} catch (SQLException e) {
-			errorno = EXECUTE_ERROR;
+		}
+		catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		return false;
@@ -161,28 +164,29 @@ public class MySQL {
 	* helper method that executes a query from a prepared statement that returns a resultSet
 	* This method does not open or close any connections 
 	* **/
-	private static ResultSet executeQuery(PreparedStatement ps) {
+	private static final ResultSet executeQuery(PreparedStatement ps) 
+	{
 		ResultSet rs = null;
 		
-		if( ps == null || isClosed())
+		if( ps == null || isClosed() )
 			return null;
-		try {
+		try
+		{
 			rs = ps.executeQuery();
 			ps.getConnection().commit();
-		} catch (SQLException e) {
-			errorno = EXECUTE_QUERY_ERROR;
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 			return null;
 		}
 		return rs;
 	}
 	
-	/**
-	* 
-	* helper method that prepares a statement based on the given string
-	* 
+	
+	/** 
+	* helper method that prepares a statement based on the given string 
 	**/
-    private static PreparedStatement prepareStatement(String statement)
+    private static final PreparedStatement prepareStatement(String statement)
     {
     	PreparedStatement ps;
     	
@@ -198,14 +202,13 @@ public class MySQL {
 		} 
     	catch (SQLException e) 
     	{
-			errorno = PREPARED_STATEMENT_ERROR;
 			e.printStackTrace();
 			return null;
 		}
     	return ps;
     }
 
-    private static boolean setValue(PreparedStatement preparedStatement,int position, Object value)
+    private static final boolean setValue(PreparedStatement preparedStatement,int position, Object value)
     {
     	
     	try
@@ -271,21 +274,25 @@ public class MySQL {
 	* @param result_array_types a list of the type specifiers that represent each individual type of the returned object array. 
 	* @return an ArrayList of Object[] that represent a result set object 
 	*/
-    public static ArrayList<Object[]> executeQuery(String mysql_string, Object[] arguments, int[] result_types)
+    public static final ArrayList<Object[]> executeQuery(String mysql_string, Object[] arguments, int[] result_types)
     {	
 		int length,i;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		final ArrayList<Object[]> list = new ArrayList<Object[]>();
+		ArrayList<Object[]> list = null;
 		
-		errorno = SUCCESS;	/**initially, no errors have occurred **/
-		operationStatus = OPERATION_FAILED; /** initially, the SQL statement has not completed **/
 		
-		if(mysql_string == null || result_types == null)
+		
+		if(mysql_string == null )
 		{
-			errorno = INVALID_ARGUMENTS;
-			return null;
+			throw new RuntimeException("mysql_string cannot be null");
 		}
+		
+		if(result_types == null)
+		{
+			throw new RuntimeException("result_types cannot be null");
+		}
+		
 		
 		if(arguments == null)
 		{
@@ -296,12 +303,13 @@ public class MySQL {
 		}
 		
 		
-		if(connect() == false) 			// connect to database 
+		if(connect() == false) 			
 		{ 
-			return null; 		// connect method will set errorno
+			return null; 		
 		}
 		
-		if((preparedStatement = prepareStatement(mysql_string)) == null) // prepare statement for execution, will set errorno 
+		
+		if((preparedStatement = prepareStatement(mysql_string)) == null) 
 		{	
 			return null;
 		}
@@ -321,8 +329,8 @@ public class MySQL {
 				return null;
 			}
 			
-			operationStatus = OPERATION_SUCCESS;
-					
+			
+			list = new ArrayList<Object[]>();
 			length = result_types.length;
 			while(resultSet.next())
 			{
@@ -372,7 +380,6 @@ public class MySQL {
 							tmp[i] = resultSet.getString(i+1);
 							break;
 						default:
-							errorno = INVALID_ARGUMENTS;
 							return null;
 							
 					}//switch
@@ -380,27 +387,31 @@ public class MySQL {
 				}//for loop
 				list.add(tmp);
 			}//while
-		}catch(SQLException e){
+		}catch(SQLException e)
+		{
 			e.printStackTrace();
-			errorno = RESULT_SET_ERROR;
 			return null;
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 			e.printStackTrace();
 		}
-		catch(ClassNotFoundException e){
+		catch(ClassNotFoundException e)
+		{
 			e.printStackTrace();
 		}
-		finally{
-			try{
+		finally
+		{
+			try
+			{
 				if(resultSet != null)
 					resultSet.close();
 				if(preparedStatement != null)
 					preparedStatement.close();
 				disconnect();
 			}
-			catch(SQLException e){
-				errorno = OTHER_CLOSE_ERROR;
+			catch(SQLException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -409,17 +420,12 @@ public class MySQL {
     
     
     
-	public static boolean execute(String mysql_string, Object[] arguments){
+	public static final boolean execute(String mysql_string, Object[] arguments){
 		int length,i;
 		PreparedStatement preparedStatement = null;
-			
-			errorno = SUCCESS;						/**initially, no errors have occurred **/
-			operationStatus = OPERATION_FAILED; 	/** initially, the SQL statement has not completed **/
-			
+						
 			if(mysql_string == null || arguments == null)
 			{
-				System.out.println("Invalid Arguments");
-				errorno = INVALID_ARGUMENTS;
 				return false;
 			}
 			
@@ -434,7 +440,8 @@ public class MySQL {
 				return false;
 			}
 			
-			try{
+			try
+			{
 				length = arguments.length;
 				Object value;
 				for(i = 0; i < length; i++){	/** loop through args and call the appropriate set method of preparedStatement depending on arg_types **/
@@ -471,36 +478,41 @@ public class MySQL {
 				if(execute(preparedStatement) == false)
 					return false;
 				
-				operationStatus = OPERATION_SUCCESS; /**at this point the query succeeded **/
 				
-			}catch(SQLException e){
+			}catch(SQLException e)
+			{
 				e.printStackTrace();
-				errorno = RESULT_SET_ERROR;
 				return false;
 			}
 			finally{
-				try{
+				try
+				{
 					if(preparedStatement != null)
+					{
 						preparedStatement.close();
+					}
 					disconnect();
 				}
-				catch(SQLException e){
-					errorno = OTHER_CLOSE_ERROR;
+				catch(SQLException e)
+				{
 					e.printStackTrace();
 				}
 			}
 		return true;
 	}
-	private static boolean isInternetReachable(){
+	
+	private static boolean isInternetReachable()
+	{
         try {
         	URL url = new URL("http://www.google.com");/** make a URL to a known source **/
             HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();/** //open a connection to that source **/
             @SuppressWarnings("unused")
 			Object objData = urlConnect.getContent(); /** trying to retrieve data from the source. If there is no connection, this line will fail **/
         } catch (IOException e1) {
-        	errorno = NO_INTERNET_CONNECTION_ERROR;
             return false;
         }
         return true;
     }
+	
+	
 }

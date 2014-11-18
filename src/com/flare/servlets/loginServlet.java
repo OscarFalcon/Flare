@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,7 @@ import com.flare.database.MySQL;
  * Servlet implementation class loginServlet
  */
 @WebServlet("/login")
-public class loginServlet extends HttpServlet {
+public class loginServlet extends GeneralServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static final int MAX_LOGIN_ATTEMPTS = 5;
@@ -34,18 +36,7 @@ public class loginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("loginServlet:doGet");
-		
-		
-		File file = new File("/Users/falcon/Workspaces/Flare/Flare_WAR/WebContent/WEB-INF/login.html");
-	    FileInputStream fis = new FileInputStream(file);
-	    byte[] data = new byte[(int)file.length()];
-	    fis.read(data);
-	    fis.close();
-	    
-	    String s = new String(data, "UTF-8");
-		response.getWriter().write(s);
-		
-		
+		doGet(request,response,"login");
 		
 	}
 

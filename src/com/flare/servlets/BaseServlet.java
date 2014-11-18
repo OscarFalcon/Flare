@@ -17,7 +17,8 @@ public class BaseServlet extends HttpServlet{
 
 	protected void validate(HttpServletRequest request, HttpServletResponse response,String app) throws ServletException, IOException {
 		HttpSession session;
-		String filepath = "/Users/falcon/Workspaces/Flare/Flare_WAR/WebContent/WEB-INF/"+app+".html";
+		
+		String filepath = getServletContext().getRealPath("/") + "/WEB-INF/" + app + ".html";
 
 		System.out.println("baseServlet");
 		System.out.println("requestURL: " + request.getRequestURL().toString());

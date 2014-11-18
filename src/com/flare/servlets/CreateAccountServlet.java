@@ -19,7 +19,7 @@ import com.flare.database.MySQL;
  * Servlet implementation class CreateAccountServlet
  */
 @WebServlet("/signup")
-public class CreateAccountServlet extends HttpServlet {
+public class CreateAccountServlet extends GeneralServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -34,18 +34,9 @@ public class CreateAccountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String filepath = "/Users/falcon/Workspaces/Flare/Flare_WAR/WebContent/WEB-INF/create-account.html";
-		File file = new File(filepath);
-		FileInputStream fis = new FileInputStream(file);
-		byte[] data = new byte[(int)file.length()];
-	    fis.read(data);
-		fis.close();
-		   
-		String s = new String(data, "UTF-8");
-		response.getWriter().write(s);
-		
-		
-		
+		System.out.println("CreateAccountServlet: doGet");
+		doGet(request,response,"create-account");
+			
 	}
 
 	/**
