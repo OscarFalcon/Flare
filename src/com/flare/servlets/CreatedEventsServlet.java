@@ -12,13 +12,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class CreateEventsServlet
  */
 @WebServlet("/events/created")
-public class CreateEventServlet extends BaseServlet {
+public class CreatedEventsServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreateEventServlet() {
+    public CreatedEventsServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class CreateEventServlet extends BaseServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("CreateEventServlet:GET");		
-		validate(request,response,"create-event");
+		validate(request,response,"created-events");
 	}
 
 	/**
