@@ -38,7 +38,7 @@ public class MySQL {
 	 static
 	 {
 		dataSource = new BasicDataSource();
-		dataSource.setUsername("root");
+		dataSource.setUsername("mike");
 		dataSource.setPassword("anableps123");
 		dataSource.setUrl("jdbc:mysql://70.123.244.148/flare");
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
