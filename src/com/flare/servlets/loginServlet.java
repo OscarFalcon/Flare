@@ -53,12 +53,14 @@ public class loginServlet extends GeneralServlet {
 		
 		System.out.println("loginServlet:POST");
 		
-		
 		if(request == null)
 		{
 			System.out.println("null request");
 			return;
 		}
+		
+		System.out.println("contentType: " + request.getContentType());
+
 		
 		session = request.getSession(false);
 		if(session == null)
