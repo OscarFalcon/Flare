@@ -31,8 +31,6 @@ public class GeneralServlet extends HttpServlet {
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response,String app) throws IOException{
     	System.out.println("NonLoginServlet: doGet");
-		
-		
 		String filepath = getServletContext().getRealPath("/") + "/WEB-INF/" + app + ".html";
 		File file = new File(filepath);
 	    FileInputStream fis = new FileInputStream(file);

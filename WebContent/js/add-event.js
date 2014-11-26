@@ -84,7 +84,7 @@ function addEvent()
 function sendPOST()
 {
 	uploadData();
-	uploadFile();
+	//uploadFile();
 	//window.location.replace("http://localhost:8080/home");
 	
 }
@@ -92,13 +92,22 @@ function sendPOST()
 
 
 
-function uploadFile()
+function uploadFile(eventTitle)
 {
 	
 	var formData = new FormData();
 	formData.append
 	formData.append("file", document.getElementById("myfile").files[0]);
-
+	formData.append("eventTitle","VALUE");
+	formData.append("eventDescription","VALUE");
+	formData.append("eventDate","VALUE");
+	formData.append("eventTime","VALUE");
+	formData.append("latitude","VALUE");
+	formData.append("longitude","VALUE");
+	
+	
+	
+	
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", "http://localhost:8080/addEvent",false);
 	xhr.send(formData);
@@ -124,27 +133,46 @@ function uploadData()
 	
 	var latitude;
 	var longitude;
-	
-	/** turn the string address to lat long **/
 	var geocoder = new google.maps.Geocoder();
 	geocoder.geocode( { 'address': eventAddress}, function(results, status) {
 
-	if (status == google.maps.GeocoderStatus.OK) {
+	if (status == google.maps.GeocoderStatus.OK)
+	{
 	    latitude = results[0].geometry.location.lat();
 	    longitude = results[0].geometry.location.lng();
 	   
-	    
-		var request = new XMLHttpRequest();
-		request.onload = function () {
+		/**var request = new XMLHttpRequest();
+		request.onload = function ()
+		{
 			 if(status == 200 )
 			 {
 				 console.log("success");
 			 }
-	
+		} **/
+		
+		var formData = new FormData();
+		formData.append("eventTitle",eventTitle);
+		formData.append("eventDescription",eventDescription);
+		formData.append("eventDate",eventDate);
+		formData.append("eventTime",eventTime);
+		formData.append("latitude",latitude);
+		formData.append("longitude",longitude);
+		formData.append("file", document.getElementById("myfile").files[0]);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function ()
+		{
+			if(xhr.status == 200)
+				{
+					console.log("success!");
+				}
 		}
 		
-	    
+		xhr.open("POST", "http://localhost:8080/addEvent",false);
+		xhr.send(formData);
 		
+		
+		/**
 		var postData = "eventTitle="+eventTitle +
 						"&eventDescription="+ eventDescription +
 						"&eventDate="+eventDate+
@@ -156,21 +184,13 @@ function uploadData()
 		
 		request.open("POST","http://localhost:8080/addEvent",false);
 		request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		request.send(postData);
+		request.send(postData);**/
 			
-		} 
+	} 
 	
 	});
 		
 }
-
-
-
-
-
-
-
-
 
 
 function changeInput(input)

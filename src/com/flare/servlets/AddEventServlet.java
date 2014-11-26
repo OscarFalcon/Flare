@@ -2,10 +2,10 @@ package com.flare.servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Enumeration;
+import java.util.Iterator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import org.apache.commons.io.IOUtils;
 import com.flare.database.MySQL;
 
 
@@ -31,7 +32,6 @@ public class AddEventServlet extends BaseServlet
 	
 	private static final long serialVersionUID = 1L;
 
-	private static final String SAVE_DIR = "/Users/falcon/Workspaces/Flare/Flare_WAR/WebContent/Events";
 	
     
     public AddEventServlet() 
@@ -50,161 +50,114 @@ public class AddEventServlet extends BaseServlet
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		PrintWriter writer = response.getWriter();
-		String contentType = request.getContentType();
+				
 		HttpSession session = request.getSession();
+		String user_id;
+		final String SAVE_DIR = System.getProperty("user.home") + "/git/Flare/WebContent/Events";
+		System.out.println(SAVE_DIR);
 		
-		System.out.println("contentType = "+contentType);
-		
-		if(contentType.contains("multipart/form-data"))
-		{
-		
-			getImage(request,response);
-			return;
-			
-		}
-		
-		String eventTitle,eventDescription,eventDate,eventTime,longitude,latitude,user_id;
-		
-		eventTitle = (String) request.getParameter("eventTitle");
-		eventDescription = (String) request.getParameter("eventDescription");
-		eventDate = (String) request.getParameter("eventDate");
-		eventTime = (String) request.getParameter("eventTime");
-		longitude = (String) request.getParameter("longitude");
-		latitude = (String) request.getParameter("latitude");
+		Object arguments[] = new Object[7]; //Object arguments[] = new Object[]{eventTitle,eventDescription,lat,log,eventDate,eventTime,user_id};
 		user_id = (String) session.getAttribute("user_id");
-		
-		
-		Enumeration<String> names = request.getParameterNames();
-		while (names.hasMoreElements()) {
-			 String paramName = names.nextElement();
-			 System.out.println("parameter name: " + paramName);
-			 System.out.println("Parameter value: "+(String)request.getParameter(paramName));
-		 }
-		
-		
-		if(eventTitle == null || eventDescription == null || eventDate == null || eventTime == null 
-				|| longitude == null || latitude == null || user_id == null)
+
+		Part part;
+		Iterator<Part> parts = request.getParts().iterator();
+		try{	
+			
+			for(int i = 0; i < 6; i++)
+        	{
+        		if(parts.hasNext() == false)
+        		{
+        			System.out.println("Insufficient data");
+        			response.setStatus(400); //The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.
+        			return;
+        		}
+        		part = parts.next();
+        		System.out.println("name = " + part.getName());
+    			InputStream in = part.getInputStream();
+    			String value = IOUtils.toString(in, "UTF-8");
+    			System.out.println("value :" + value);
+        		arguments[i] = value;        		
+        	}
+		}
+		catch(IOException e)
+        {
+			e.printStackTrace();
+        }
+        	
+		arguments[6] =  user_id;
+			
+		if(arguments[0] == null || arguments[1] == null || arguments[2] == null || arguments[3] == null 
+				|| arguments[4] == null || arguments[5] == null || arguments[6] == null)
 		{
 			System.out.println("AddEventServlet: null parameter values");
 			return;
 			
 		}
-		 
+			 
 		BigDecimal lat,log;
+		String locationLat,locationLog;
+		locationLat = (String)arguments[4];
+		locationLog = (String)arguments[5];
 		
-		lat = new BigDecimal(latitude);
-		log = new BigDecimal(longitude);
+		locationLat = locationLat.substring(0,locationLat.indexOf('.')+6);
+		locationLog = locationLog.substring(0,locationLat.indexOf('.')+6);
 		
-		String mysql_string = "INSERT INTO event(title,description,locationLat,locationLong,date,time,user_id) VALUES(?,?,?,?,?,?,?)";
-		Object arguments[] = new Object[]{eventTitle,eventDescription,lat,log,eventDate,eventTime,user_id};
-				
+		lat = new BigDecimal(locationLat);
+		log = new BigDecimal(locationLog);
+		lat.setScale(5);
+		log.setScale(5);
+		System.out.println("locationLat === " + locationLat);
+		System.out.println("locationLog === " + locationLog);
+
 		
+		arguments[4] =lat;
+		arguments[5] = log;
+		
+		
+		String mysql_string = "INSERT INTO event(title,description,date,time,locationLat,locationLong,user_id) VALUES(?,?,?,?,?,?,?)";
+					
 		if(MySQL.execute(mysql_string, arguments) == false)
 		{
-			writer.write("error");
+			response.setStatus(503); //Service Unavailable
+			return;
+		}	
 			
-		}
-		else
+		String lastIncrement = "SELECT LAST_INSERT_ID()";
+		int result_types[] = new int[]{MySQL.INTEGER};
+		Object[] arguments1 = new Object[0];
+		ArrayList<Object[]> results;
+			
+			
+		results = MySQL.executeQuery(lastIncrement, arguments1, result_types);
+		if(results == null)
 		{
-			String lastIncrement = "SELECT LAST_INSERT_ID()";
-			int result_types[] = new int[]{MySQL.INTEGER};
-			Object[] arguments1 = new Object[0];
-			ArrayList<Object[]> results;
-			
-			
-			results = MySQL.executeQuery(lastIncrement, arguments1, result_types);
-			if(results == null)
-			{
-				System.out.println("addEventServlet: null results");
-				writer.close();
-				return;
-			}
-			
-			int eventID = (int) results.get(0)[0];
-			System.out.println("eventID: " + eventID);
-			session.setAttribute("eventID",Integer.toString(eventID));
-			writer.write("true");
+			System.out.println("addEventServlet: last increment failed");
+			response.setStatus(503);
+			return;
 		}
-		writer.close();
-		return;
+			
+		int eventID = (int) results.get(0)[0];
+		System.out.println("eventID: " + eventID);
+		session.setAttribute("eventID",Integer.toString(eventID));
 		
-	
-	}
-	
-	
-	
 
-    
-    
-    
-    
-    
-	
-	
-	private void getImage(HttpServletRequest request, HttpServletResponse response)
-	{
-		HttpSession session = request.getSession();
-
-		System.out.println("savePath = " + SAVE_DIR);
+		if(parts.hasNext() == false)
+		{
+			System.out.println("Insufficient data");
+			response.setStatus(400);
+			return;
+		}
+		part = parts.next();
+		part.getSubmittedFileName();			  	    
+		String saveName = (String) session.getAttribute("eventID"); 
 		
-		// creates the save directory if it does not exists
-        File fileSaveDir = new File(SAVE_DIR);
-        if (!fileSaveDir.exists()) {
+        File fileSaveDir = new File(SAVE_DIR); 		
+        if (!fileSaveDir.exists())
+        {
             fileSaveDir.mkdir();
         }
-        
-        
-        try {
-        	for (Part part : request.getParts())
-        	{
-        		part.getSubmittedFileName();
-			    String fileName = extractFileName(part);			  	    
-			    String saveName = (String) session.getAttribute("eventID");  
-			    part.write(SAVE_DIR + File.separator + saveName + getExtension(fileName));
-			}
-		} catch (IOException | ServletException e1)
-        {
-			e1.printStackTrace();
-		}
-        
-        
-	
-		
-		
-		
-		
+		part.write(SAVE_DIR + File.separator + saveName + ".jpg");
+		return;
 	}
-	
-	private static String getFilename(Part part) {
-	    for (String cd : part.getHeader("content-disposition").split(";")) {
-	        if (cd.trim().startsWith("filename")) {
-	            String filename = cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-	            return filename.substring(filename.lastIndexOf('/') + 1).substring(filename.lastIndexOf('\\') + 1); // MSIE fix.
-	        }
-	    }
-	    return null;
-	}
-	
-	  private String extractFileName(Part part) {
-	        String contentDisp = part.getHeader("content-disposition");
-	        String[] items = contentDisp.split(";");
-	        for (String s : items) {
-	            if (s.trim().startsWith("filename")) {
-	                return s.substring(s.indexOf("=") + 2, s.length()-1);
-	            }
-	        }
-	        return "";
-	    }
-	
-	  
-	  private String getExtension(String fileName)
-	  {
-		  return fileName.substring(fileName.lastIndexOf('.'));
-		  
-	  }
-	  
-	  
-	
 
 }

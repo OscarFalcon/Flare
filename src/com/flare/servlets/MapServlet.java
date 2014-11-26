@@ -54,7 +54,7 @@ public class MapServlet extends BaseServlet {
 			System.out.println("MapServlet:POST: username is null");
 			return;
 		}
-		String mysql_string = "SELECT title,description,locationLat,locationLong,date,time,user_id FROM event WHERE user_id = ?";
+		String mysql_string = "SELECT title,description,locationLat,locationLong,date,time,id FROM event WHERE user_id = ?";
 		ArrayList<Object[]> results;
 		Object[] arguments = new Object[]{user_id};
 		int[] result_types = new int[]{MySQL.STRING,MySQL.STRING,MySQL.BIG_DECIMAL,

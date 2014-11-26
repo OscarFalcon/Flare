@@ -302,7 +302,7 @@ var styles = [
 				
   		contentString = '<div class ="infoWindow">'+
         	'<div>'+	
-			'<img src="http://localhost:8080/Profile/'+  myPicID + '.jpg" '+ 
+			'<img src="http://localhost:8080/Events/'+  myPicID + '.jpg" '+ 
 			'width="42" height="42">' +
         	'<h3>' + myTitle + '</h3>'+			
 			'<p>' + myDescription + '</p>' +
