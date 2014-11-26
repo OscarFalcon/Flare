@@ -56,18 +56,12 @@ public class homeServlet extends BaseServlet {
 			{
 				case "createAccount":
 					createAccount(request,response);
-			
 			}
-			
-			
 			
 			
 		}
 		
-		
-		
-		
-		
+	
 	}
 	
 	

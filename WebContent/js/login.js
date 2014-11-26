@@ -30,14 +30,14 @@ function validateForm()
 	var request = new XMLHttpRequest();
 	request.onload = function () {
 
-	   var status = request.status; // HTTP response status, e.g., 200 for "200 OK"
+	   var status = request.status; // HTTP response status, e.g., 200 for "200 OK" (Request was successful)
 	   var response = request.responseText; // Returned data, e.g., an HTML document.
 	   console.log("status: " + status);
 	   console.log("response: " + response);
 	   
 	   if(status == 200 && response == "true")
 	   {
-		   window.location.replace("http://localhost:8080/home");
+		   window.location.replace("http://localhost:8080/home"); // everything was good should
 		   //window.location.href="#page2";
 	   }
 	   else

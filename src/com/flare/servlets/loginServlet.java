@@ -67,6 +67,7 @@ public class loginServlet extends GeneralServlet {
 		{
 			session = request.getSession(true);
 			session.setAttribute("loginCount",0);
+			// will log member out after 1 minute
 			session.setMaxInactiveInterval(60);
 			session.setAttribute("loggedIn",false);
 		}
@@ -101,6 +102,7 @@ public class loginServlet extends GeneralServlet {
         	return;
         }
   		
+        
 		String mysql_string = "SELECT user_id FROM person WHERE username = ? && password = ?";
 		Object arguments[] = new Object[2];
 		int result_types[] = new int[1];
