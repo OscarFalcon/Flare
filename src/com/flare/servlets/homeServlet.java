@@ -1,12 +1,15 @@
 package com.flare.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import com.flare.database.MySQL;
 
 @WebServlet("/home")
@@ -28,50 +31,52 @@ public class homeServlet extends BaseServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session;
-		String action;
-
 		System.out.println("homeServlet: doPost");
 		
 		
+		/**
+		 * Load the events onto the feed!
+		 */
 		
-		session = request.getSession(false);
-		if(session == null)
-		{
-			System.out.println("no session established");
-			response.sendRedirect("http://localhost:8080/login");
+		String eventid, eventTitle, eventDescription, eventDate, eventTime,userID;
+		String sql = "SELECT id,title,description,date,time,user_id FROM event WHERE 1";
+		String json;
+		
+		System.out.println("HIT SERVER");
+		
+		int[] result_types = {MySQL.INTEGER,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.INTEGER};
+		ArrayList<Object[]> results;
+		System.out.println("TEST");
+		results = MySQL.executeQuery(sql, null, result_types);
+		if(results == null){
+			response.setStatus(400);
 			return;
 		}
-		
-		
-		else if((boolean)session.getAttribute("loggedIn"))
-		{
-			action = request.getParameter("action");
-			if(action == null)
-			{
-				System.out.println("homeServlet-doPost: ERROR - action is null");
-				return;
-			}
-			switch(action)
-			{
-				case "createAccount":
-					createAccount(request,response);
-			}
+		json = "{ \"size\": " + "\"" + results.size() + "\"";
+		for(int i=0; i < results.size(); i++){
+			eventid = (String) results.get(i)[0].toString();
+			eventTitle = (String) results.get(i)[1];
+			eventDescription = (String) results.get(i)[2];
+			eventDate = (String) results.get(i)[3];
+			eventTime = (String) results.get(i)[4];
+			userID = (String) results.get(i)[5].toString();
 			
-			
-		}
+			json += "," + "\"eventid"+i+"\": " + "\"" + eventid + "\"," +
+					"\"eventtitle"+i+"\": " + "\"" + eventTitle + "\"," +
+					"\"eventdescription"+i+"\": " + "\"" + eventDescription + "\"," +
+					"\"eventdate"+i+"\": " + "\"" + eventDate + "\"," +
+					"\"eventtime"+i+"\": " + "\"" + eventTime + "\"," +
+					"\"eventuserid"+i+"\": " + "\"" + userID + "\"";
+		}	
+		json += "}";
 		
-	
+		System.out.println("JSON: " + json);
+		PrintWriter writer = response.getWriter();
+		writer.write(json);
+		
+		
+		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
