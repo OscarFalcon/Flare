@@ -62,11 +62,12 @@ public class ProfileServlet extends BaseServlet {
 		lastname = (String) results.get(0)[3];
 		aboutme = (String) results.get(0)[4];
 		
-		String json = "{ \"username\": " + "\"" + username + "\"," + 
-				"{ \"firstname\": " + "\"" + firstname + "\"," + 
-				"{ \"lastname\": " + "\"" + lastname + "\"," +
-				"{ \"email\": " + "\"" + email + "\"," + 
-				"{ \"aboutme\": " + "\"" + aboutme + "\"";
+		String json = "{ \"userid\": " + "\"" + user_id + "\"," +
+				"\"username\": " + "\"" + username + "\"," + 
+				" \"firstname\": " + "\"" + firstname + "\"," + 
+				" \"lastname\": " + "\"" + lastname + "\"," +
+				" \"email\": " + "\"" + email + "\"," + 
+				" \"aboutme\": " + "\"" + aboutme + "\" }";
 		
 		System.out.println("JSON: "+ json);
 		
