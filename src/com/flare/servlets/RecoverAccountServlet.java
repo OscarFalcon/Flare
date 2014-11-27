@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class RecoverAccountServlet
- */
+
 @WebServlet("/RecoverAccount")
 public class RecoverAccountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,9 +38,7 @@ public class RecoverAccountServlet extends HttpServlet {
 		response.getWriter().write(s);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}

@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +21,11 @@ import org.apache.commons.io.IOUtils;
 
 import com.flare.database.MySQL;
 
-/**
- * Servlet implementation class EditProfileServlet
- */
+@MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
+maxFileSize=1024*1024*10,      					// 10MB
+maxRequestSize=1024*1024*50)   					// 50MB
+
+
 @WebServlet("/editprofile")
 public class EditProfileServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
@@ -48,18 +51,10 @@ public class EditProfileServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userID;
-		
-		String email;
-		String password;
-		String first_name;
-		String last_name;
-		String profile_picture;
-		String aboutme;
 		HttpSession session;
-		PrintWriter writer;
 		final String SAVE_DIR = System.getProperty("user.home") + "/git/Flare/WebContent/Profile";
 		
-		Object arguments[] = new Object[5];
+		Object arguments[] = new Object[6];
 		
 		
 		System.out.println("EditProfileServlet:POST");
@@ -70,21 +65,26 @@ public class EditProfileServlet extends BaseServlet {
 			return;
 		}
 		
-		session = request.getSession(false);
-		userID = (String) session.getAttribute("userID");
+		session = request.getSession();
+		userID = (String) session.getAttribute("user_id");
 		
-		Part part;
+		Part part = null;
 		Iterator<Part> parts = request.getParts().iterator();
+		
 		try{
-			for(int i=0; i<5; i++){
-				if(parts.hasNext()==false){
+			for(int i=0; i<5; i++)
+			{
+				if(parts.hasNext() == false)
+				{
 					System.out.println("Insufficient Data");
 					response.setStatus(400);
 					return;
 				}
 				part = parts.next();
+				System.out.println("name: " + part.getName());
 				InputStream in = part.getInputStream();
 				String value = IOUtils.toString(in, "UTF-8");
+				System.out.println("value: " + value);
 				arguments[i] = value;
 			}
 			

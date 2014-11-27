@@ -54,6 +54,8 @@ public class AddEventServlet extends BaseServlet
 		HttpSession session = request.getSession();
 		String user_id;
 		final String SAVE_DIR = System.getProperty("user.home") + "/git/Flare/WebContent/Events";
+		//final String SAVE_DIR = getServletContext().getContextPath();
+		
 		System.out.println(SAVE_DIR);
 		
 		Object arguments[] = new Object[7]; //Object arguments[] = new Object[]{eventTitle,eventDescription,lat,log,eventDate,eventTime,user_id};
@@ -157,7 +159,7 @@ public class AddEventServlet extends BaseServlet
             fileSaveDir.mkdir();
         }
 		part.write(SAVE_DIR + File.separator + saveName + ".jpg");
-		return;
+		return; 
 	}
 
 }
