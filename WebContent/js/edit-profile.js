@@ -36,7 +36,7 @@ function editProfile()
 	   
 	   if(status == 200)
 	   {
-		   window.location.replace("http://localhost:8080/editprofile"); // everything was good should
+		   window.location.replace("http://localhost:8080/profile"); // everything was good should
 		   console.log("success");
 	   }
 	   else
