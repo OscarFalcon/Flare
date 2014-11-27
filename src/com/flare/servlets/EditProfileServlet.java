@@ -69,10 +69,11 @@ public class EditProfileServlet extends BaseServlet {
 		userID = (String) session.getAttribute("user_id");
 		
 		Part part = null;
+		Part photoPart = null;
 		Iterator<Part> parts = request.getParts().iterator();
 		
 		try{
-			for(int i=0; i<5; i++)
+			for(int i=0; i<6; i++)
 			{
 				if(parts.hasNext() == false)
 				{
@@ -81,11 +82,41 @@ public class EditProfileServlet extends BaseServlet {
 					return;
 				}
 				part = parts.next();
-				System.out.println("name: " + part.getName());
-				InputStream in = part.getInputStream();
-				String value = IOUtils.toString(in, "UTF-8");
-				System.out.println("value: " + value);
-				arguments[i] = value;
+				System.out.println("contentType: " + part.getContentType());
+				if(part.getContentType() == null) //data part of request
+				{
+					System.out.println("name: " + part.getName());
+					InputStream in = part.getInputStream();
+					String value = IOUtils.toString(in, "UTF-8");
+					System.out.println("value: " + value);
+					
+					switch(part.getName())
+					{
+					case "email":
+						arguments[0] = value;
+						break;
+					case "firstName":
+						arguments[1] = value;
+						break;
+					case "lastName":
+						arguments[2] = value;
+						break;
+					case "aboutme":
+						arguments[3] = value;
+						break;
+					case "password":
+						arguments[4] = value;
+						break;	
+					
+					}
+					
+				}
+				else
+				{
+					photoPart = part;
+					
+				}
+					
 			}
 			
 		} catch(IOException e){
@@ -104,16 +135,15 @@ public class EditProfileServlet extends BaseServlet {
 		{
 			response.setStatus(400);
 			return;
-		}
-		
-		if(!parts.hasNext())
+		}	
+		if(photoPart == null)
 		{
+			System.out.println("Photo upload error");
 			response.setStatus(400);
 			return;
+			
 		}
-		
-		part = parts.next();
-		part.write(SAVE_DIR + File.separator + userID + ".jpg");
+		photoPart.write(SAVE_DIR + File.separator + userID + ".jpg");
 		return;
 	}
 

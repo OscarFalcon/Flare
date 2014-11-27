@@ -211,8 +211,6 @@ var styles = [
 				points[i].push(columns[j]);
 				
 			}
-			
-			
 		}
 		
 		
@@ -223,20 +221,7 @@ var styles = [
 	request.send(); 
 	
 	
-	
-	
-	
-					
-	/** place markers and infowindows on map 
-	var points = [[29.531527,-98.562403,"hsa.jpg","Bowl Night!","Come join us for some fun!"]
-	  				 ,[29.586706,-98.624847,"cs.gif","Hack-A-Thon","bring your own computer"] 
-				   	 ];			  **/
 	var latLng,marker,infowindow,contentString,markers = [],infowindows = [],circles = [];
-
-
-	
-	
-
 
   	for(var i = 0; i < points.length; i++)
   	{
@@ -248,8 +233,6 @@ var styles = [
   		var myDate = points[i][4];
   		var myTime = points[i][5];
   		var myPicID = points[i][6];
-  		
-  		
   		
   		latLng = new google.maps.LatLng(myLat,myLong);
 		marker = new google.maps.Marker({
