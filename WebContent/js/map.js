@@ -178,17 +178,18 @@ var styles = [
 		})
 		
 		
-		
-		
 	}
-	function error(msg) {
+	function error(msg) 
+	{
 		alert('error: ' + msg);
 	}
 	
-	
-	var points = new Array();
-	
+		
 	/** lets get marker locations dynamically from server **/
+	var latLng,marker,infowindow,contentString,markers = [],infowindows = [],circles = [];
+
+	
+	
 	var request = new XMLHttpRequest();
 	request.onload = function() {
 		var status = request.status;
@@ -196,24 +197,88 @@ var styles = [
 		console.log("map-POST: status = " + status);
 		console.log("map-POST: response = " + response);
 		
-		var rows = response.split('#'); //protocol for obtaining each row of the results;
 		
-		for(var i=0;i < rows.length;i++)
+		if(status != 200)
 		{
-			var line = rows[i];
-			console.log("row"+ i + ": " + line);
-			
-			points[i] = new Array(); 
-			var columns = line.split('|');
-			for(var j = 0; j < columns.length;j++)
-			{
-				console.log("column" + j + ": " + columns[j]);
-				points[i].push(columns[j]);
-				
-			}
+			return;
 		}
+		var json = JSON.parse(response);
 		
+		for(var i = 0; i < json.events.length ; i++)
+		{
+			
+			latLng = new google.maps.LatLng(json.events[i].locationLat,json.events[i].locationLog);
+			marker = new google.maps.Marker({
+				position:latLng,
+				map: control.map,
+				//animation:google.maps.Animation.BOUNCE,
+				icon:'img/maps/orange.marker.png',
+				title:json.events[i].eventTitle
+			});
+			markers.push(marker);
+			
+			google.maps.event.addListener(marker, 'click', (function(x) {
+				var hide = 0;
+				return function() {	
+					if(hide)
+			  			markers[x].info.close();
+					else
+						markers[x].info.open(control.map,markers[x]);
+					hide = !hide;
+				}
+			})(i));
 		
+			var circle = new google.maps.Circle({
+				map:control.map,
+				center: control.center,
+	            radius: 4000,
+				fillColor: '#fff',
+	            fillOpacity: .6,
+	            strokeColor: '#313131',
+	            strokeOpacity: .4,
+	            strokeWeight: .8
+			});
+			circle.setMap(control.map);
+			circles.push(circle);
+			
+		 	var direction = 1;
+		    var rMin = 2000, rMax = 4000;
+		    setInterval(function()
+		    {
+		       for(var i=0;i<circles.length;i++)
+		       {
+		    	   var mycircle = circles[i];
+		    	   var radius = mycircle.getRadius();
+		    	   
+			       if ((radius > rMax) || (radius < rMin))
+			       {
+			    	   direction *= -1;
+			       }
+			       mycircle.setRadius(radius + direction * 10);	
+		       }
+		    }, 50);
+		    circle.bindTo('center', marker, 'position');
+			
+		    contentString = '<div class ="infoWindow">'+
+	      	'<div>'+	
+				'<img src="http://localhost:8080/Events/'+  json.events[i].eventId + '.jpg" '+ 
+				'width="42" height="42">' +
+	      	'<h3>' + json.events[i].eventTitle + '</h3>'+			
+				'<p>' + json.events[i].eventDescription + '</p>' +
+				'<input type="image" src="img/maps/next-arrow.png" width="20" height="20"/>' +
+	      	'</div>';
+		    
+		    console.log(contentString);
+			
+			infowindow = new google.maps.InfoWindow({
+				content:contentString,
+			});
+			marker.info = infowindow;
+		    
+		    
+		    
+		
+		}//for loop
 		
 	}
 	request.open("POST","http://localhost:8080/map",false);
@@ -221,82 +286,5 @@ var styles = [
 	request.send(); 
 	
 	
-	var latLng,marker,infowindow,contentString,markers = [],infowindows = [],circles = [];
 
-  	for(var i = 0; i < points.length; i++)
-  	{
-  		
-  		var myTitle = points[i][0];
-  		var myDescription = points[i][1];
-  		var myLat = points[i][2];
-  		var myLong = points[i][3];
-  		var myDate = points[i][4];
-  		var myTime = points[i][5];
-  		var myPicID = points[i][6];
-  		
-  		latLng = new google.maps.LatLng(myLat,myLong);
-		marker = new google.maps.Marker({
-			position:latLng,
-			map: control.map,
-			//animation:google.maps.Animation.BOUNCE,
-			icon:'img/maps/orange.marker.png',
-			title:points[i][3]
-		});
-		markers.push(marker);
-
-		google.maps.event.addListener(marker, 'click', (function(x) {
-			var hide = 0;
-			return function() {	
-				if(hide)
-		  			markers[x].info.close();
-				else
-					markers[x].info.open(control.map,markers[x]);
-				hide = !hide;
-			}
-		})(i));
-
-		var circle = new google.maps.Circle({
-			map:control.map,
-			center: control.center,
-            radius: 4000,
-			fillColor: '#fff',
-            fillOpacity: .6,
-            strokeColor: '#313131',
-            strokeOpacity: .4,
-            strokeWeight: .8
-		});
-        circle.setMap(control.map);
-		circles.push(circle);
-
-        var direction = 1;
-        var rMin = 2000, rMax = 4000;
-        setInterval(function() {
-            for(var i=0;i<circles.length;i++){
-				var mycircle = circles[i];
-				var radius = mycircle.getRadius();
-	            if ((radius > rMax) || (radius < rMin)) {
-	                direction *= -1;
-	            }
-	            mycircle.setRadius(radius + direction * 10);	
-			}
-        }, 50);
-		
-		circle.bindTo('center', marker, 'position');
-				
-  		contentString = '<div class ="infoWindow">'+
-        	'<div>'+	
-			'<img src="http://localhost:8080/Events/'+  myPicID + '.jpg" '+ 
-			'width="42" height="42">' +
-        	'<h3>' + myTitle + '</h3>'+			
-			'<p>' + myDescription + '</p>' +
-			'<input type="image" src="img/maps/next-arrow.png" width="20" height="20"/>' +
-        	'</div>';
-
-  		console.log(contentString);
-  		
-		infowindow = new google.maps.InfoWindow({
-			content:contentString,
-		});
-		marker.info = infowindow;
-	}
 }//start function

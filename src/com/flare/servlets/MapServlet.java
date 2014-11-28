@@ -42,54 +42,87 @@ public class MapServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		String user_id = (String) session.getAttribute("user_id");
-		PrintWriter writer = response.getWriter();
+		final HttpSession session = request.getSession();
+		final String user_id = (String) session.getAttribute("user_id");
+		final PrintWriter writer = response.getWriter();
+		
+		response.setContentType("application/json");
 		
 		System.out.println("MapServlet:POST");
-		System.out.println("MapServlet:POST: user_id = " + user_id);
 		
 		if(user_id == null)
 		{
 			System.out.println("MapServlet:POST: username is null");
 			return;
 		}
-		String mysql_string = "SELECT title,description,locationLat,locationLong,date,time,id FROM event WHERE user_id = ?";
+		
+		
+		String mysql_string = "SELECT event.id,event.title,event.description,event.locationLat,event.locationLong"
+							  + ",event.date,event.time,event.type,event.attending,event.checked_in,friends.friend_id from"
+							  + " event INNER JOIN friends ON friends.friend_id = event.user_id WHERE friends.user_id = ?";
+		
 		ArrayList<Object[]> results;
 		Object[] arguments = new Object[]{user_id};
-		int[] result_types = new int[]{MySQL.STRING,MySQL.STRING,MySQL.BIG_DECIMAL,
-				MySQL.BIG_DECIMAL,MySQL.STRING,MySQL.STRING,MySQL.INTEGER};
+		int[] result_types = new int[]{MySQL.INTEGER,MySQL.STRING,MySQL.STRING,MySQL.BIG_DECIMAL,MySQL.BIG_DECIMAL,MySQL.STRING,
+									   MySQL.STRING,MySQL.STRING,MySQL.INTEGER,MySQL.INTEGER,MySQL.INTEGER};
 		
-		
-		
+
 		results = MySQL.executeQuery(mysql_string, arguments, result_types);
+		
 		if(results == null)
 		{
-			writer.write("error");
-			writer.close();
+			response.setStatus(503);	//503 Service Unavailable.
 			return;
 		}
-		String responseString = "";
 		
-		for(int i = 0; i < results.size();i++)
+		StringBuilder json = new StringBuilder("{ \"events\": [");
+		
+		int size = results.size();
+		for(int i = 0; i < size;i++)
 		{
-			Object tmp[];
-			String line; 
-			
+			Object tmp[]; 
+			String line = null;
 			tmp = results.get(i);
-			line = (String)tmp[0] + "|" + (String)tmp[1] + "|" +
-					((BigDecimal)tmp[2]).toString() + "|" + ((BigDecimal)tmp[3]).toString() + "|" +
-					(String)tmp[4] + "|" + (String)tmp[5] + "|" + (int)tmp[6];
+			String eventTitle,eventDescription,eventDate,eventTime,eventType;
+			BigDecimal locationLat,locationLog;
+			int eventId,eventAttending,eventCheckedIn,friendId;
 			
-			responseString = responseString + "#" + line;
+			
+			eventId = (int) tmp[0];
+			eventTitle = (String) tmp[1];
+			eventDescription = (String) tmp[2];
+			locationLat = (BigDecimal) tmp[3];
+			locationLog = (BigDecimal) tmp[4];
+			eventDate = (String) tmp[5];
+			eventTime = (String) tmp[6];
+			eventType = (String) tmp[7];
+			eventAttending = (int) tmp[8];
+			eventCheckedIn = (int) tmp[9];
+			friendId = (int) tmp[10];
+			 
+			line  = "{ \"eventId\":" + "\"" + eventId + "\"," +
+					"\"eventTitle\":" + "\""+ eventTitle + "\"," +
+					"\"eventDescription\":" + "\"" + eventDescription + "\"," +
+					"\"eventDate\":" + "\"" + eventDate + "\"," +
+					"\"eventTime\":" + "\"" + eventTime +"\"," +
+					"\"eventType\":" + "\"" + eventType + "\"," +
+					"\"locationLat\":" +"\""+ locationLat + "\"," +
+					"\"locationLog\":" +"\""+locationLog + "\"," + 
+					"\"attending:\":" + "\""+eventAttending + "\"," +
+					"\"checkedIn\":" + "\""+eventCheckedIn +"\"," +
+					"\"friendId\":" + "\""+friendId + "\"}";
+			if( (i + 1) != size)
+			{
+				line = line + ",";
+			}
+			
+			json.append(line);
 			
 		}
-		if(responseString.length() > 0)
-			responseString = responseString.substring(1);
+		json.append("]}");
+		System.out.println(json);
 		
-		
-		System.out.println(responseString);
-		writer.write(responseString);
+		writer.write(json.toString());
 		writer.close();
 		return;
 		

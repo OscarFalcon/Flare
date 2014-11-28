@@ -7,7 +7,7 @@ function getProfile(){
 			{
 				console.log("response: "+xhr.response);
 				var response = JSON.parse(xhr.responseText);
-				document.getElementById("profilePicture").src = "/profile/"+response["userid"]+".jpg";
+				document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+response["userid"]+".jpg";
 				document.getElementById("profileName").innerHTML = response["firstname"] + " " + response["lastname"];
 				document.getElementById("profileEmail").innerHTML = response["email"];
 				document.getElementById("profileAboutMe").innerHTML = response["aboutme"];

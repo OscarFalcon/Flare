@@ -16,7 +16,7 @@ function getEvents(){
 					"<div data-role=\"content\">" +
 						"<h2 style=\"text-align:center\">" + response["eventtitle"+i] + "<h2>" +
 					"<div style=\" text-align:center\" data-controltype=\"image\">" +
-			            "<img style=\"max-width: 100%; width: 400px; height: auto; max-height: 300px;\" src=\"" + "Event/"+response["eventid" + i]+".jpg" + "\">" +
+			            "<img style=\"max-width: 100%; width: 400px; height: auto; max-height: 300px;\" src=\"" + "http://localhost:8080/Events/"+response["eventid" + i]+".jpg" + "\">" +
 			        "</div>" +
 			        "<h3 style=\" text-align:center\"><img class=\"round\" style=\"width: 50px; height: 50px\" src=\"img/stock2.jpg\">By <a href=\"#profile\">UTSA</a> on " + response["eventdate"+i] + response["eventtime"+i] +
 	         "&nbsp;&nbsp;<b style=\"font-size:15px\">553 going</b></h3>" +
