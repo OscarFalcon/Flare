@@ -32,7 +32,7 @@ function uploadData()
 	var latitude;
 	var longitude;
 	var geocoder = new google.maps.Geocoder();
-	geocoder.geocode( { 'address': eventAddress}, function(results, status) {
+	geocoder.geocode( { 'address': eventAddress,'componentRestrictions':{'country':'US'}}, function(results, status) {
 
 	if (status == google.maps.GeocoderStatus.OK)
 	{
