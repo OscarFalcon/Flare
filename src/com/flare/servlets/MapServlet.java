@@ -57,6 +57,7 @@ public class MapServlet extends BaseServlet {
 			return;
 		}
 		String json = FlareService.getEvents(Integer.parseInt(user_id));
+		
 		System.out.println(json);
 		writer.write(json.toString());
 		writer.close();
