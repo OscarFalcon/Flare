@@ -46,7 +46,6 @@ public class BaseServlet extends HttpServlet{
 			   
 			String s = new String(data, "UTF-8");
 			response.getWriter().write(s);
-			
 		}
 		
 		return;

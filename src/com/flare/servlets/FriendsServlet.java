@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.flare.services.FlareService;
+
 /**
  * Servlet implementation class FriendsServlet
  */
@@ -15,27 +17,23 @@ import javax.servlet.http.HttpServletResponse;
 public class FriendsServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FriendsServlet() {
+   
+    public FriendsServlet() 
+    {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("FriendsServlet:GET");		
 		validate(request,response,"friends");
+		String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
+		System.out.println(json);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	
 	}
 
 }

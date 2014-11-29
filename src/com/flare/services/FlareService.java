@@ -36,52 +36,98 @@ public static String getEvents(int user_id)
 	int size = results.size();
 	for(int i = 0; i < size;i++)
 	{
-	Object tmp[]; 
-	String line = null;
-	tmp = results.get(i);
-	String eventTitle,eventDescription,eventDate,eventTime,eventType,friendUsername;
-	BigDecimal locationLat,locationLog;
-	int eventId,eventAttending,eventCheckedIn,friendId;
+		Object tmp[]; 
+		String line = null;
+		tmp = results.get(i);
+		String eventTitle,eventDescription,eventDate,eventTime,eventType,friendUsername;
+		BigDecimal locationLat,locationLog;
+		int eventId,eventAttending,eventCheckedIn,friendId;
 	
 	
-	eventId = (int) tmp[0];
-	eventTitle = (String) tmp[1];
-	eventDescription = (String) tmp[2];
-	locationLat = (BigDecimal) tmp[3];
-	locationLog = (BigDecimal) tmp[4];
-	eventDate = (String) tmp[5];
-	eventTime = (String) tmp[6];
-	eventType = (String) tmp[7];
-	eventAttending = (int) tmp[8];
-	eventCheckedIn = (int) tmp[9];
-	friendId = (int) tmp[10];
-	friendUsername = (String) tmp[11];
-	
-	line  = "{ \"eventId\":" + "\"" + eventId + "\"," +
-		"\"eventTitle\":" + "\""+ eventTitle + "\"," +
-		"\"eventDescription\":" + "\"" + eventDescription + "\"," +
-		"\"eventDate\":" + "\"" + eventDate + "\"," +
-		"\"eventTime\":" + "\"" + eventTime +"\"," +
-		"\"eventType\":" + "\"" + eventType + "\"," +
-		"\"locationLat\":" +"\""+ locationLat + "\"," +
-		"\"locationLog\":" +"\""+locationLog + "\"," + 
-		"\"attending:\":" + "\""+eventAttending + "\"," +
-		"\"checkedIn\":" + "\""+eventCheckedIn +"\"," +
-		"\"friendId\":" + "\""+friendId + "\"," +
-		"\"friendUsername\":" +"\""+ friendUsername + "\""
-		+ "}";
-	if( (i + 1) != size)
-	{
-	line = line + ",";
-	}
-	
-	json.append(line);
-	
+		eventId = (int) tmp[0];
+		eventTitle = (String) tmp[1];
+		eventDescription = (String) tmp[2];
+		locationLat = (BigDecimal) tmp[3];
+		locationLog = (BigDecimal) tmp[4];
+		eventDate = (String) tmp[5];
+		eventTime = (String) tmp[6];
+		eventType = (String) tmp[7];
+		eventAttending = (int) tmp[8];
+		eventCheckedIn = (int) tmp[9];
+		friendId = (int) tmp[10];
+		friendUsername = (String) tmp[11];
+		
+		line  = "{ \"eventId\":" + "\"" + eventId + "\"," +
+			"\"eventTitle\":" + "\""+ eventTitle + "\"," +
+			"\"eventDescription\":" + "\"" + eventDescription + "\"," +
+			"\"eventDate\":" + "\"" + eventDate + "\"," +
+			"\"eventTime\":" + "\"" + eventTime +"\"," +
+			"\"eventType\":" + "\"" + eventType + "\"," +
+			"\"locationLat\":" +"\""+ locationLat + "\"," +
+			"\"locationLog\":" +"\""+locationLog + "\"," + 
+			"\"attending:\":" + "\""+eventAttending + "\"," +
+			"\"checkedIn\":" + "\""+eventCheckedIn +"\"," +
+			"\"friendId\":" + "\""+friendId + "\"," +
+			"\"friendUsername\":" +"\""+ friendUsername + "\""
+			+ "}";
+		if( (i + 1) != size)
+		{
+		line = line + ",";
+		}
+		
+		json.append(line);	
 	}
 	json.append("]}");
-	
 	return json.toString();
 }
+
+public static String getFriends(int user_id)
+{
+	String mysql = "SELECT person.username, person.email,person.first_name,person.last_name,"
+				   + "person.aboutme FROM friends INNER JOIN person ON person.user_id = friends.friend_id "
+				   + "WHERE friends.user_id = ?";
+	Object[] arguments = {user_id};
+	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
+	
+	ArrayList<Object[]> results = MySQL.executeQuery(mysql, arguments, result_types);
+	
+	if(results == null)
+	{
+		return null;
+	}
+	
+	String username,email,firstName,lastName,aboutMe;
+	
+	StringBuilder json = new StringBuilder("{\"friends\":");
+	int size = results.size();
+	for(int i = 0; i < size; i++)
+	{
+		Object[] row = results.get(i);
+		username = (String) row[0];
+		email = (String) row[1];
+		firstName = (String) row[2];
+		lastName = (String) row[3];
+		aboutMe = (String) row[4];
+		
+		String line = "\"username\":" + "\""+username + "\"," +
+				"\"email\":" + "\""+email + "\"," +
+				"\"firstName\":" + "\""+firstName +"\"," +
+				"\"lastName\":" + "\""+lastName + "\"," +
+				"\"aboutMe\":" + "\"" + aboutMe  + "\"" + 
+				"}";
+		
+		if( i + 1 != size)
+		{
+			line += ",";
+		}
+		
+		json.append(line);
+	}
+	json.append("]}");	
+	return json.toString();
+}
+
+
 
 
 
