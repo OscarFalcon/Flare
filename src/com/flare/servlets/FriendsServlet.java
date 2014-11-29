@@ -1,6 +1,7 @@
 package com.flare.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,13 +28,16 @@ public class FriendsServlet extends BaseServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("FriendsServlet:GET");		
 		validate(request,response,"friends");
-		String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
-		System.out.println(json);
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		PrintWriter writer = response.getWriter();
+		String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
+		System.out.println(json);
+		writer.write(json);
+		writer.close();
+		return;
 	}
 
 }
