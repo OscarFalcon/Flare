@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FriendsServlet
  */
-@WebServlet("/profile/friends")
+@WebServlet("/friends")
 public class FriendsServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        
