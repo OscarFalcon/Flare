@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.flare.database.MySQL;
+import com.flare.services.FlareService;
 
 @WebServlet("/home")
 public class homeServlet extends BaseServlet {
@@ -36,38 +37,8 @@ public class homeServlet extends BaseServlet {
 		/**
 		 * Load the events onto the feed!
 		 */
+		String json = FlareService.getEvents(Integer.parseInt( (String) request.getSession().getAttribute("user_id")));
 		
-		String eventid, eventTitle, eventDescription, eventDate, eventTime,userID;
-		String sql = "SELECT id,title,description,date,time,user_id FROM event WHERE 1";
-		String json;
-		
-		System.out.println("HIT SERVER");
-		
-		int[] result_types = {MySQL.INTEGER,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.INTEGER};
-		ArrayList<Object[]> results;
-		System.out.println("TEST");
-		results = MySQL.executeQuery(sql, null, result_types);
-		if(results == null){
-			response.setStatus(400);
-			return;
-		}
-		json = "{ \"size\": " + "\"" + results.size() + "\"";
-		for(int i=0; i < results.size(); i++){
-			eventid = (String) results.get(i)[0].toString();
-			eventTitle = (String) results.get(i)[1];
-			eventDescription = (String) results.get(i)[2];
-			eventDate = (String) results.get(i)[3];
-			eventTime = (String) results.get(i)[4];
-			userID = (String) results.get(i)[5].toString();
-			
-			json += "," + "\"eventid"+i+"\": " + "\"" + eventid + "\"," +
-					"\"eventtitle"+i+"\": " + "\"" + eventTitle + "\"," +
-					"\"eventdescription"+i+"\": " + "\"" + eventDescription + "\"," +
-					"\"eventdate"+i+"\": " + "\"" + eventDate + "\"," +
-					"\"eventtime"+i+"\": " + "\"" + eventTime + "\"," +
-					"\"eventuserid"+i+"\": " + "\"" + userID + "\"";
-		}	
-		json += "}";
 		
 		System.out.println("JSON: " + json);
 		PrintWriter writer = response.getWriter();
