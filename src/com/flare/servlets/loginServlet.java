@@ -28,21 +28,16 @@ public class loginServlet extends GeneralServlet {
 	
 	
     public loginServlet() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("loginServlet:doGet");
 		doGet(request,response,"login");
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username;
 		String password;
@@ -58,35 +53,20 @@ public class loginServlet extends GeneralServlet {
 			System.out.println("null request");
 			return;
 		}
-		
-		System.out.println("contentType: " + request.getContentType());
 
-		
 		session = request.getSession(false);
 		if(session == null)
 		{
 			session = request.getSession(true);
 			session.setAttribute("loginCount",0);
-			// will log member out after 1 minute
-			session.setMaxInactiveInterval(60);
+			session.setMaxInactiveInterval(60);// will log member out after 1 minute
 			session.setAttribute("loggedIn",false);
-		}
-		
-		
-		System.out.println("requestURL: " + request.getRequestURL().toString());
-			
+		}			
 		
 		loginCount = (Integer) session.getAttribute("loginCount");
+		
 		username = (String) request.getParameter("username");
 		password = (String) request.getParameter("password");
-		
-		
-		Enumeration<String> names = request.getParameterNames();
-		while (names.hasMoreElements()) {
-			 String paramName = names.nextElement();
-			 System.out.println("parameter name: " + paramName);
-			 System.out.println("Parameter value: "+(String)request.getParameter(paramName));
-		 }
 		
 		if(username == null || password == null)
 		{
@@ -94,15 +74,12 @@ public class loginServlet extends GeneralServlet {
 			return;
 		}
 		
-		
-		
         if(loginCount == MAX_LOGIN_ATTEMPTS)
         {
         	System.out.println("max login attemps");
         	return;
         }
   		
-        
 		String mysql_string = "SELECT user_id FROM person WHERE username = ? && password = ?";
 		Object arguments[] = new Object[2];
 		int result_types[] = new int[1];
@@ -112,9 +89,7 @@ public class loginServlet extends GeneralServlet {
 		arguments[0] = username;
 		arguments[1] = password;
 		result_types[0] = MySQL.INTEGER;
-		
-		
-		
+
 		results = MySQL.executeQuery(mysql_string, arguments, result_types);
 		if(results == null )
 		{
