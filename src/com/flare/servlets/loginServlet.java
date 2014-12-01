@@ -129,6 +129,7 @@ public class loginServlet extends GeneralServlet {
 			session.setAttribute("loggedIn",true);
 			session.setAttribute("username",username);
 			session.setAttribute("user_id",id);
+			// instead write out the json
 			writer.write("true");	
 		}
 		else

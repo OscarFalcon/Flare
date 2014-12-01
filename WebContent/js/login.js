@@ -45,6 +45,8 @@ function validateForm()
 		   document.getElementById('error').innerHTML="<font color=\"red\">Invalid Credentials</font>";
 	   }
 	   
+	   //parse out json
+	   
 	}
 	request.open("POST","http://localhost:8080/login",true);
 	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
