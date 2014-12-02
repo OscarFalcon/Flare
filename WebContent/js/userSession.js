@@ -1,6 +1,7 @@
 
-function initUser(username, password, email, firstname, lastname, aboutme)
+function initUser(username, password, userID, email, firstname, lastname, aboutme)
 {
+	sessionStorage.userID = userID;
 	sessionStorage.username = username;
 	sessionStorage.password = password;
 	sessionStorage.email = email;

@@ -40,6 +40,7 @@ function validateForm()
 		// getting the userSession (initUser function)
 		//var userSession = require('userSession');
 		
+		console.log("user id:" + person.user[0].userID);
 		console.log("user email: " + person.user[0].eMail);
 		console.log("first name: " + person.user[0].firstName);
 		console.log("last name: " + person.user[0].lastName);
@@ -49,7 +50,7 @@ function validateForm()
 		
 		
 		//set values for the user
-		initUser(user, pass, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
+		initUser(user, pass, person.user[0].userID, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
 	   
 	   if(status == 200 && response != false)
 	   {

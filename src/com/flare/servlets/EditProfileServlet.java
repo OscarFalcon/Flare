@@ -136,15 +136,18 @@ public class EditProfileServlet extends BaseServlet {
 			response.setStatus(400);
 			return;
 		}	
-		if(photoPart == null)
+		if(photoPart == null) //This does not necessarily mean something went wrong, just that no photo needed to be uploaded.
 		{
-			System.out.println("Photo upload error");
-			response.setStatus(400);
+			System.out.println("Photo not updated!");
+			response.setStatus(200);
 			return;
 			
+		} else {
+			System.out.println("writing photo!");
+			photoPart.write(SAVE_DIR + File.separator + userID + ".jpg");
+			System.out.println("Photo has been written!");
+			return;
 		}
-		photoPart.write(SAVE_DIR + File.separator + userID + ".jpg");
-		return;
 	}
 
 }
