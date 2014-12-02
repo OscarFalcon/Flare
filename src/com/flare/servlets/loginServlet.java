@@ -39,12 +39,16 @@ public class loginServlet extends GeneralServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String username;
 		String password;
+		String firstname;
+		String lastname;
+		String email;
+		String aboutme;
 		Integer loginCount;
 		HttpSession session;
 		PrintWriter writer;
-		
 		
 		System.out.println("loginServlet:POST");
 		
@@ -59,7 +63,7 @@ public class loginServlet extends GeneralServlet {
 		{
 			session = request.getSession(true);
 			session.setAttribute("loginCount",0);
-			session.setMaxInactiveInterval(60);// will log member out after 1 minute
+			session.setMaxInactiveInterval(120);// will log member out after 2 minute
 			session.setAttribute("loggedIn",false);
 		}			
 		
@@ -67,6 +71,7 @@ public class loginServlet extends GeneralServlet {
 		
 		username = (String) request.getParameter("username");
 		password = (String) request.getParameter("password");
+		
 		
 		if(username == null || password == null)
 		{
@@ -80,32 +85,66 @@ public class loginServlet extends GeneralServlet {
         	return;
         }
   		
-		String mysql_string = "SELECT user_id FROM person WHERE username = ? && password = ?";
+		String mysql_string = "SELECT user_id, email, first_name, last_name, aboutme FROM person WHERE username = ? && password = ?";
 		Object arguments[] = new Object[2];
-		int result_types[] = new int[1];
+		int result_types[] = new int[5];
 		ArrayList<Object[]> results;
 		writer = response.getWriter();
 		
 		arguments[0] = username;
 		arguments[1] = password;
 		result_types[0] = MySQL.INTEGER;
+		result_types[1] = MySQL.STRING;
+		result_types[2] = MySQL.STRING;
+		result_types[3] = MySQL.STRING;
+		result_types[4] = MySQL.STRING;
 
 		results = MySQL.executeQuery(mysql_string, arguments, result_types);
+		
 		if(results == null )
 		{
-			writer.write("error");
+			writer.write("false");
 			writer.close();
 			return;
 		}
+		
+		// Creating JSON Object
+		String json = "{ \"user\": [";
+
+
 		if(results.size() != 0)
 		{
 			String id = Integer.toString((int)results.get(0)[0]);
+			email = (String) results.get(0)[1];
+			firstname = (String) results.get(0)[2];
+			lastname = (String) results.get(0)[3];
+			aboutme = (String) results.get(0)[4];
+			
 			session.setAttribute("loginCount",0);
 			session.setAttribute("loggedIn",true);
 			session.setAttribute("username",username);
+			session.setAttribute("password", password);
 			session.setAttribute("user_id",id);
-			writer.write("true");	
+			session.setAttribute("firstname", firstname);
+			session.setAttribute("lastname", lastname);
+			session.setAttribute("email", email);
+			session.setAttribute("aboutme", aboutme);
+			
+
+			// Populating JSON Object
+			json += "{ \"userID\":" + "\"" + id + "\"," +
+					    	"\"firstName\":" + "\""+ firstname + "\"," +
+						    "\"lastName\":" + "\"" + lastname + "\"," +
+						    "\"eMail\":" + "\"" + email + "\"," +
+		    				"\"aboutMe\":" + "\"" + aboutme +"\"" + "}]}";
+
+			
+			System.out.println("JSON: " + json );
+			
+			// write out json object
+			writer.write(json);	
 		}
+			
 		else
 		{
 			writer.write("false");
@@ -118,8 +157,6 @@ public class loginServlet extends GeneralServlet {
 		
 		
 	}
-	
-	
 	
 
 }

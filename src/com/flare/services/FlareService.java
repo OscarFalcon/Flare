@@ -83,11 +83,11 @@ public static String getEvents(int user_id)
 
 public static String getFriends(int user_id)
 {
-	String mysql = "SELECT person.username, person.email,person.first_name,person.last_name,"
+	String mysql = "SELECT person.user_id, person.username, person.email,person.first_name,person.last_name,"
 				   + "person.aboutme FROM friends INNER JOIN person ON person.user_id = friends.friend_id "
 				   + "WHERE friends.user_id = ?";
 	Object[] arguments = {user_id};
-	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
+	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
 	
 	ArrayList<Object[]> results = MySQL.executeQuery(mysql, arguments, result_types);
 	
@@ -96,20 +96,22 @@ public static String getFriends(int user_id)
 		return null;
 	}
 	
-	String username,email,firstName,lastName,aboutMe;
+	String friend_id, username,email,firstName,lastName,aboutMe;
 	
-	StringBuilder json = new StringBuilder("{\"friends\":");
+	StringBuilder json = new StringBuilder("{\"friends\":[");
 	int size = results.size();
 	for(int i = 0; i < size; i++)
 	{
 		Object[] row = results.get(i);
-		username = (String) row[0];
-		email = (String) row[1];
-		firstName = (String) row[2];
-		lastName = (String) row[3];
-		aboutMe = (String) row[4];
+		friend_id = (String) row[0];
+		username = (String) row[1];
+		email = (String) row[2];
+		firstName = (String) row[3];
+		lastName = (String) row[4];
+		aboutMe = (String) row[5];
 		
-		String line = "\"username\":" + "\""+username + "\"," +
+		String line = "{\"friend_id\":" + "\""+friend_id+"\"," +
+				"\"username\":" + "\""+username + "\"," +
 				"\"email\":" + "\""+email + "\"," +
 				"\"firstName\":" + "\""+firstName +"\"," +
 				"\"lastName\":" + "\""+lastName + "\"," +

@@ -5,6 +5,7 @@ function getProfile(){
 	{
 		if(xhr.status == 200)
 			{
+			
 				console.log("response: "+xhr.response);
 				var response = JSON.parse(xhr.responseText);
 				document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+response["userid"]+".jpg";

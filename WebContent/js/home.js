@@ -8,6 +8,14 @@ function getEvents(){
 			var response = JSON.parse(xhr.responseText);
 			
 			var htmlCode = "";
+						
+			console.log("USERNAME: " + sessionStorage.username);
+			console.log("PASSWORD: " + sessionStorage.password);
+			console.log("FIRSTNAME: " + sessionStorage.firstname);
+			console.log("LASTNAME: " + sessionStorage.lastname);
+			console.log("EMAIL: " + sessionStorage.email);
+			console.log("ABOUTME: " + sessionStorage.aboutme);
+			
 			
 			for (i=0; i<response.events.length; i++){
 				console.log("Loop" + i);
