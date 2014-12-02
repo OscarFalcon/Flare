@@ -19,11 +19,7 @@ function validateForm()
 	}
 	
 	
-	var url = "localhost:/8080/login";
-	var method = "POST";
 	var postData;
-	var async = true;
-
 	postData = "username=" + user +
 			   "&password=" + pass;
 	

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ConfirmEventServlet
  */
-@WebServlet("/events/confirm")
+@WebServlet("/confirmEvent")
 public class ConfirmEventServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
        

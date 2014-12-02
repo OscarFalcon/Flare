@@ -10,11 +10,13 @@
   <link href="/css/codiqa.ext.min.css" rel="stylesheet">
   <link href="/css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
   <link href="/css/flare.css" rel="stylesheet">
-
+  
   <script src="/js/jquery-1.9.1.min.js"></script>
   <script src="/js/jquery.mobile-1.3.1.min.js"></script>
   <script src="/js/codiqa.ext.min.js"></script>
-  
+  <script src="/js/confirm-event.js"></script>
+  <script src="/js/flare-utils.js"></script>
+    
   <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
   <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
@@ -26,8 +28,7 @@
 
   <div data-role="page" data-control-title="ConfirmEvent" id="confirmEvent">
     <div data-theme="a" data-role="header">
-        <a data-role="button" data-direction="reverse" data-transition="slide"
-        href="#addEvent" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+        <a data-role="button" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" onclick="redirectTo('addEvent')">
             Back
         </a>
         <h3>
@@ -39,11 +40,6 @@
             <input name="" id="searchinput1" placeholder="" value="" type="search">
         </div>
         <div id="googlemapsjs3" class="google-map" style="width: 288px; height: 300px; margin-left: auto; margin-right: auto">
-        </div>
-        <div data-controltype="htmlblock">
-            <p>
-                This displays all previous screens information
-            </p>
         </div>
         <a data-role="button" href="#feed" data-icon="check" data-iconpos="left">
             Confirm

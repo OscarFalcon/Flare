@@ -36,7 +36,14 @@ function uploadData()
 
 	if (status == google.maps.GeocoderStatus.OK)
 	{
-	    latitude = results[0].geometry.location.lat();
+	    
+		for(var i=0;i<results.length;i++)
+		{
+			console.log(results[i].formatted_address);
+		}
+		
+		
+		latitude = results[0].geometry.location.lat();
 	    longitude = results[0].geometry.location.lng();
 	
 		var formData = new FormData();
