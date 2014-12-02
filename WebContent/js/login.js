@@ -26,6 +26,8 @@ function validateForm()
 
 	postData = "username=" + user +
 			   "&password=" + pass;
+
+	
 	
 	var request = new XMLHttpRequest();
 	request.onload = function () {
@@ -35,18 +37,33 @@ function validateForm()
 	   console.log("status: " + status);
 	   console.log("response: " + response);
 	   
-	   if(status == 200 && response == "true")
+	   
+	   // Converting JSON Object to Javascript Object
+		var person = JSON.parse(response);
+		
+		// getting the userSession (initUser function)
+		//var userSession = require('userSession');
+		
+		console.log("user email: " + person.user[0].eMail);
+		console.log("first name: " + person.user[0].firstName);
+		console.log("last name: " + person.user[0].lastName);
+		console.log("about me: " + person.user[0].aboutMe);
+		console.log("username: " + user);
+		console.log("Password: " + pass);
+		
+		
+		//set values for the user
+		initUser(user, pass, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
+	   
+	   if(status == 200 && response != false)
 	   {
 		   window.location.replace("http://localhost:8080/home"); // everything was good should
-		   //window.location.href="#page2";
 	   }
 	   else
 	   {
 		   document.getElementById('error').innerHTML="<font color=\"red\">Invalid Credentials</font>";
 	   }
-	   
-	   //parse out json
-	   
+	   	   
 	}
 	request.open("POST","http://localhost:8080/login",true);
 	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
