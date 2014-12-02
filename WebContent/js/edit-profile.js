@@ -23,7 +23,22 @@ function editProfile()
 	//These we have to be careful with!
 	var picture = document.getElementById("myfile").files[0];
 	var password = document.getElementById("passwordField").value;
+	var verify = document.getElementById("verifyField").value;
 	
+	if (email == '' || aboutme == '' || firstname == '' || lastname == '')
+	{
+		document.getElementById('error').innerHTML="<font color=\"red\">Missing information </font>";
+		return false;
+	} else if(password == '' || verify == ''){
+		password = sessionStorage.password;
+		verify = sessionStorage.password;
+	}
+	
+	if(password != verify )
+	{
+		document.getElementById('error').innerHTML="<font color=\"red\">Passwords do not match</font>";
+		return false;
+	}
 	var url = "http://localhost:8080/editprofile";
 	var async = false;
 	
@@ -54,7 +69,7 @@ function editProfile()
 	   }
 	   else
 	   {
-		   //document.getElementById('error').innerHTML="<font color=\"red\">Unable to update profile</font>";
+		   document.getElementById('error').innerHTML="<font color=\"red\">Unable to update profile</font>";
 	   }
 	   
 	}
