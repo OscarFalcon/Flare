@@ -31,8 +31,6 @@ public class homeServlet extends BaseServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("homeServlet: doPost");
-		
-		
 		/**
 		 * Load the events onto the feed!
 		 */
@@ -42,15 +40,8 @@ public class homeServlet extends BaseServlet {
 		System.out.println("JSON: " + json);
 		PrintWriter writer = response.getWriter();
 		writer.write(json);
-		
-		
-		
+			
 	}
-	
-	
-	
-	
-	
 	
 	
 	
