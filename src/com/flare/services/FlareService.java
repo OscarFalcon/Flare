@@ -9,7 +9,63 @@ public class FlareService
 {
 
 
+public static String getCreatedEvents(int user_id){
+	String mysql_string = "SELECT event.id,event.title,event.description,"
+			  + "event.date,event.time,event.type,event.attending,"
+			  + "event.checked_in from event WHERE user_id = ?";
+	ArrayList<Object[]> results;
+	Object[] arguments = new Object[]{user_id};
+	int[] result_types = new int[]{MySQL.INTEGER,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.INTEGER,MySQL.INTEGER};
+	
+	results = MySQL.executeQuery(mysql_string, arguments, result_types);
+	
+	if(results.isEmpty())
+	{
+		return null;
+	}
+	
+	StringBuilder json = new StringBuilder("{ \"events\": [");
+	
+	int size = results.size();
+	for(int i = 0; i < size;i++)
+	{
+		Object tmp[]; 
+		String line = null;
+		tmp = results.get(i);
+		String eventTitle,eventDescription,eventDate,eventTime,eventType;
+		int eventId,eventAttending,eventCheckedIn;
+	
+		eventId = (int) tmp[0];
+		eventTitle = (String) tmp[1];
+		eventDescription = (String) tmp[2];
+		eventDate = (String) tmp[3];
+		eventTime = (String) tmp[4];
+		eventType = (String) tmp[5];
+		eventAttending = (int) tmp[6];
+		eventCheckedIn = (int) tmp[7];
 
+	
+		line  = "{ \"eventId\":" + "\"" + eventId + "\"," +
+				"\"eventTitle\":" + "\""+ eventTitle + "\"," +
+				"\"eventDescription\":" + "\"" + eventDescription + "\"," +
+				"\"eventDate\":" + "\"" + eventDate + "\"," +
+				"\"eventTime\":" + "\"" + eventTime +"\"," +
+				"\"eventType\":" + "\"" + eventType + "\"," +
+				"\"attending:\":" + "\""+eventAttending + "\"," +
+				"\"checkedIn\":" + "\""+eventCheckedIn +"\"" +
+				"}";
+			if( (i + 1) != size)
+			{
+			line = line + ",";
+			}
+			
+			json.append(line);	
+		}
+		json.append("]}");
+		return json.toString();
+}
+	
+	
 public static String getEvents(int user_id)
 {
 	String mysql_string = "SELECT event.id,event.title,event.description,event.locationLat,"

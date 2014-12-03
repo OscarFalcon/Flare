@@ -8,6 +8,4 @@ function initUser(username, password, userID, email, firstname, lastname, aboutm
 	sessionStorage.firstname = firstname;
 	sessionStorage.lastname = lastname;
 	sessionStorage.aboutme = aboutme;
-		
 }
-
