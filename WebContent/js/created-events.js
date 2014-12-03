@@ -53,6 +53,4 @@ function showEvents(){
 	console.log("success!");
 }
 
-
-
 getCreatedEvents();
