@@ -1,6 +1,8 @@
 function validateForm()
 {
 	
+	
+   
 	var user = document.getElementById("usernameField").value;
 	var pass = document.getElementById("passwordField").value;
 	
