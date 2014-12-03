@@ -25,7 +25,6 @@ function loadFriends(){
 			console.log("success!");
 		}
 		
-		
 	}
 	
 	xhr.open("POST", "http://localhost:8080/friends", false);

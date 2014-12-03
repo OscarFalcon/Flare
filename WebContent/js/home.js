@@ -8,13 +8,7 @@ function getEvents(){
 			var response = JSON.parse(xhr.responseText);
 			
 			var htmlCode = "";
-						
-			console.log("USERNAME: " + sessionStorage.username);
-			console.log("PASSWORD: " + sessionStorage.password);
-			console.log("FIRSTNAME: " + sessionStorage.firstname);
-			console.log("LASTNAME: " + sessionStorage.lastname);
-			console.log("EMAIL: " + sessionStorage.email);
-			console.log("ABOUTME: " + sessionStorage.aboutme);
+			
 			
 			
 			for (i=0; i<response.events.length; i++){
@@ -23,7 +17,7 @@ function getEvents(){
 					'<div data-role="content">' +
 						'<h2 style="text-align:center">' + response.events[i].eventTitle + '<h2>' +
 						'<div style=" text-align:center" data-controltype="image">' +
-							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+response.events[i].eventId+'.jpg' + '">' +
+							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+response.events[i].eventId+'.jpg"' + 'onerror="if (this.src != \'/Events/error.jpg\') this.src=\'/Events/error.jpg\';">' +
 						'</div>' +
 						'<h3 style=" text-align:center">' + 
 							'<img class="round" style="width: 50px; height: 50px" src="http://localhost:8080/Profile/' + response.events[i].friendId + '.jpg">By <a href=\"#profile\">' + response.events[i].friendUsername+'</a> on ' + response.events[i].eventDate + response.events[i].eventTime +

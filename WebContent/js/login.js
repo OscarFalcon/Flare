@@ -1,6 +1,8 @@
 function validateForm()
 {
 	
+	
+   
 	var user = document.getElementById("usernameField").value;
 	var pass = document.getElementById("passwordField").value;
 	
@@ -33,26 +35,20 @@ function validateForm()
 	   console.log("status: " + status);
 	   console.log("response: " + response);
 	   
-	   
-	   // Converting JSON Object to Javascript Object
-		var person = JSON.parse(response);
-		
-		// getting the userSession (initUser function)
-		//var userSession = require('userSession');
-		
-		console.log("user email: " + person.user[0].eMail);
-		console.log("first name: " + person.user[0].firstName);
-		console.log("last name: " + person.user[0].lastName);
-		console.log("about me: " + person.user[0].aboutMe);
-		console.log("username: " + user);
-		console.log("Password: " + pass);
-		
-		
-		//set values for the user
-		initUser(user, pass, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
-	   
-	   if(status == 200 && response != false)
+	   if(status == 200 && response != "false")
 	   {
+		// Converting JSON Object to Javascript Object
+			var person = JSON.parse(response);	
+			
+		   	console.log("user id:" + person.user[0].userID);
+			console.log("user email: " + person.user[0].eMail);
+			console.log("first name: " + person.user[0].firstName);
+			console.log("last name: " + person.user[0].lastName);
+			console.log("about me: " + person.user[0].aboutMe);
+			console.log("username: " + user);
+			console.log("Password: " + pass);
+		 //set values for the user
+		   initUser(user, pass, person.user[0].userID, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
 		   window.location.replace("http://localhost:8080/home"); // everything was good should
 	   }
 	   else
