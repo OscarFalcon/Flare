@@ -2,16 +2,7 @@
 
 var fileInput;
 
-
-
 function sendPOST()
-{
-	uploadData();
-	//window.location.replace("http://localhost:8080/home");
-	
-}
-
-function uploadData()
 {
 	var eventTitle = document.getElementById("textinput8").value;
 	var eventDescription = document.getElementById("textarea1").value;
@@ -78,6 +69,21 @@ function changeInput(input)
 	fileInput = input;
 }
 
+
+function saveEvent(eventTitle,eventDescription,eventDate,eventTime)
+{
+	sessionStorage.eventTitle = document.getElementById("titleInput").value;
+	sessionStorage.eventDescription = document.getElementById("descriptionInput").value;
+	sessionStorage.eventDate = eventDate = document.getElementById("dateInput").value;
+	sessionStorage.eventTime = eventTime = document.getElementById("timeInput").value;
+	
+	
+	console.log(sessionStorage.eventTitle);
+	console.log(sessionStorage.eventDescription);
+	console.log(sessionStorage.eventDate);
+	console.log(sessionStorage.eventTime);
+	
+}
 
 
 

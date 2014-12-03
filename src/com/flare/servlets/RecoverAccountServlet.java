@@ -27,15 +27,7 @@ public class RecoverAccountServlet extends GeneralServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String filepath = "/Users/falcon/Workspaces/Flare/Flare_WAR/WebContent/WEB-INF/recover-account.html";
-		File file = new File(filepath);
-		FileInputStream fis = new FileInputStream(file);
-		byte[] data = new byte[(int)file.length()];
-	    fis.read(data);
-		fis.close();
-		   
-		String s = new String(data, "UTF-8");
-		response.getWriter().write(s);
+		doGet(request,response,"recover-account");
 	}
 
 	
