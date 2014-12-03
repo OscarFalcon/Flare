@@ -15,9 +15,17 @@ function initUser(username, password, userID, email, firstname, lastname, aboutm
 
 function saveEvent(eventTitle,eventDescription,eventDate,eventTime)
 {
-	sessionStorage.eventTitle = eventTitle;
-	sessionStorage.eventDescription = eventDescription;
-	sessionStorage.eventDate = eventDate;
-	sessionStorage.eventTime = eventTime;
+	sessionStorage.eventTitle = document.getElementById("titleInput").value;
+	sessionStorage.eventDescription = document.getElementById("descriptionInput").value;
+	sessionStorage.eventDate = eventDate = document.getElementById("dateInput").value;
+	sessionStorage.eventTime = eventTime = document.getElementById("timeInput").value;
+	
+	
+	console.log(sessionStorage.eventTitle);
+	console.log(sessionStorage.eventDescription);
+	console.log(sessionStorage.eventDate);
+	console.log(sessionStorage.eventTime);
+	
+	dfgdfg
 	
 }
