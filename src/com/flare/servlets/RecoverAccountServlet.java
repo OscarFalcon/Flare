@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/RecoverAccount")
-public class RecoverAccountServlet extends HttpServlet {
+public class RecoverAccountServlet extends GeneralServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
