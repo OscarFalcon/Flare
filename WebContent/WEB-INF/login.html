@@ -11,6 +11,9 @@
   <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
   <link href="css/flare.css" rel="stylesheet">
 
+  <script src="/js/flare-utils.js"></script>
+
+
   <script src="js/jquery-1.9.1.min.js"></script>
   <script src="js/jquery.mobile-1.3.1.min.js"></script>
   <script src="js/codiqa.ext.min.js"></script>
@@ -44,14 +47,14 @@
 	      </div>
 	      <div data-theme="a" data-role="footer" data-position="fixed">
 	          <div>
-	              <a href="http://localhost:8080/signup" data-transition="fade">
+	              <a onclick="redirectTo('signup')">
               
 	                  <font color="lightblue">Sign up for flare</font>
 	              </a>
 	          </div>
 	          <div>
 	        
-	              <a href ="http://localhost:8080/recover-account" data-transition="fade">
+	              <a onclick="redirectTo('RecoverAccount')">
 	                  <font color="lightblue">Can't Sign In?</font>
 	              </a>
 	          </div>

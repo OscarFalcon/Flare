@@ -11,7 +11,6 @@ function sendPOST()
 	
 }
 
-
 function uploadData()
 {
 	var eventTitle = document.getElementById("textinput8").value;
@@ -73,9 +72,15 @@ function uploadData()
 		
 }
 
-
 function changeInput(input)
 {
 	console.log("changeInput");
 	fileInput = input;
 }
+
+
+
+
+
+
+
