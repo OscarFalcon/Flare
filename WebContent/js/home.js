@@ -8,7 +8,7 @@ function getEvents(){
 			var response = JSON.parse(xhr.responseText);
 			
 			var htmlCode = "";
-			
+		
 			
 			
 			for (i=0; i<response.events.length; i++){
