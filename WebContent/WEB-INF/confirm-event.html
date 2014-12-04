@@ -14,6 +14,7 @@
   <script src="/js/jquery-1.9.1.min.js"></script>
   <script src="/js/jquery.mobile-1.3.1.min.js"></script>
   <script src="/js/codiqa.ext.min.js"></script>
+  <script src="/js/add-event.js"></script>
   <script src="/js/confirm-event.js"></script>
   <script src="/js/flare-utils.js"></script>
     
@@ -37,11 +38,11 @@
     </div>
     <div data-role="content">
         <div data-role="fieldcontain" data-controltype="searchinput">
-            <input name="" id="searchinput1" placeholder="" value="" type="search">
+            <input name="" id="searchInput" placeholder="" value="" type="search">
         </div>
         <div id="googlemapsjs3" class="google-map" style="width: 288px; height: 300px; margin-left: auto; margin-right: auto">
         </div>
-        <a data-role="button" href="#feed" data-icon="check" data-iconpos="left">
+        <a data-role="button" onclick="addEvent();" data-icon="check" data-iconpos="left">
             Confirm
         </a>
     </div>

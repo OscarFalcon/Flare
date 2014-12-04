@@ -1,6 +1,6 @@
 var htmlCode = "";
 var event = [];
-var eventChosen = [];
+
 
 function getCreatedEvents(){
 	var xhr = new XMLHttpRequest();

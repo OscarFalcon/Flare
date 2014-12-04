@@ -187,3 +187,58 @@ function start(control)
 }
 
 
+function addEvent(){
+	var eventAddress = document.getElementById("searchInput").value;
+	var latitude;
+	var longitude;
+	var geocoder = new google.maps.Geocoder();
+	geocoder.geocode( { 'address': eventAddress,'componentRestrictions':{'country':'US'}}, function(results, status) {
+
+	if (status == google.maps.GeocoderStatus.OK)
+	{
+	    
+		for(var i=0;i<results.length;i++)
+		{
+			console.log(results[i].formatted_address);
+		}
+		
+		
+		latitude = results[0].geometry.location.lat();
+	    longitude = results[0].geometry.location.lng();
+	
+	    console.log("Event Title = " + localStorage.getItem("title"));
+	    
+	    
+		var formData = new FormData();
+		formData.append("eventTitle",localStorage.getItem("title"));
+		formData.append("eventDescription",localStorage.getItem("description"));
+		formData.append("eventDate",localStorage.getItem("date"));
+		formData.append("eventTime",localStorage.getItem("time"));
+		formData.append("latitude",latitude);
+		formData.append("longitude",longitude);
+		formData.append("file", file);
+		
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function ()
+		{
+			if(xhr.status == 200)
+				{
+					console.log("success!");
+					alert("Successfully Added New Event " + Event["title"]);
+					redirectTo("home");
+				}
+		}
+		
+		xhr.open("POST", "http://localhost:8080/confirm-event",false);
+		xhr.send(formData);
+			
+	} 
+	
+	});
+	
+	
+}
+
+
+
+

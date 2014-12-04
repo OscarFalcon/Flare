@@ -12,6 +12,7 @@
   <link href="/css/flare.css" rel="stylesheet">
 
   <script src="/js/add-event.js"></script>
+  <script src="/js/confirm-event.js"></script>
   <script src="/js/flare-utils.js"></script>
   
  
@@ -68,24 +69,24 @@
         </div>
         <div data-role="fieldcontain" data-controltype="textarea">
             <label for="textarea1">
-                Event Discription
+                Event Description
             </label>
             <textarea name="" id="descriptionInput" placeholder="" required></textarea>
         </div>
         <div data-role="fieldcontain" data-controltype="dateinput">
-            <label for="dateinput1">
+            <label for="dateinput">
                 Date
             </label>
             <input name="" id="dateInput" placeholder="" value="" type="date" required>
         </div>
         <div data-role="fieldcontain" data-controltype="timeinput">
-            <label for="timeinput1">
+            <label for="timeinput">
                 Time
             </label>
             <input name="" id="timeInput" placeholder="" value="" type="date" required>
         </div>
         <input type="button" data-icon="arrow-r" data-iconpos="right" value="Confirm Location" 
-        						onclick="saveEvent();redirectTo('confirmEvent')" data-mini="true">
+        						onclick="confirmEvent();" data-mini="true">
 		
         
     </div>
