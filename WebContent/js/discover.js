@@ -11,9 +11,9 @@ function loadDiscover(){
 				htmlCode += ""+
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+
-						'<img class="round" style=" float: left; width: 75px; height: 75px;" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg"> onerror="if (this.src != \'/Profile/error.jpg\') this.src=\'/Profile/error.jpg\';"'+
+						'<img class="round" style=" float: left; width: 75px; height: 75px;" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg" onerror="if (this.src != \'/Profile/error.jpg\') this.src=\'/Profile/error.jpg\';">'+
 						'<h2>'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</h2></br>'+
-						response.friends[i].username +'<button style="float:right;font-size:16px;" type="button" onclick="addFriend();">Follow</button>'+
+						response.friends[i].username +'<button style="float:right;font-size:16px;" type="button" onclick="addFriend('+response.friends[i].friend_id+');">Follow</button>'+
 						'<br>'+'<div style="text-align:center;">'+response.friends[i].aboutMe + '</div>'+
 					'</div>'+
 				'</div>' +
@@ -30,8 +30,31 @@ function loadDiscover(){
 }
 
 
-
-function addFiend(){
+function addFriend(friend_id){
+	var user_id=sessionStorage.getItem("userID");
+	var postData;
+	postData="userID="+user_id+
+	"&friendID="+friend_id;
 	
+	var request = new XMLHttpRequest();
+	request.onload = function () {
+
+	   var status = request.status; // HTTP response status, e.g., 200 for "200 OK" (Request was successful)
+	   var response = request.responseText; // Returned data, e.g., an HTML document.
+	   console.log("status: " + status);
+	   console.log("response: " + response);
+	   
+	   if(status == 200 && response != "false")
+	   {
+		   alert("successfully added friend!!");
+	   }
+	   else {
+		   alert("something went wrong");
+	   }
+	}
+	request.open("POST","http://localhost:8080/discover",true);
+	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	request.send(postData); 
+	return;
 	
 }

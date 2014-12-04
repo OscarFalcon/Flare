@@ -40,11 +40,17 @@ public class DiscoverServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
-		String json = FlareService.getAllUsers(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
-		System.out.println(json);
-		writer.write(json);
-		writer.close();
-		return;
+		if(request.getParameter("userID") == null || request.getParameter("friendID") == null){	
+			String json = FlareService.getAllUsers(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
+			System.out.println(json);
+			writer.write(json);
+			writer.close();
+			return;
+		}else {
+			String responseString = FlareService.addFriend(request.getParameter("userID"), request.getParameter("friendID"));
+			writer.write(responseString);
+			writer.close();
+		}
 	}
 
 }
