@@ -23,8 +23,6 @@ public class RecoverAccountServlet extends GeneralServlet {
      * @see HttpServlet#HttpServlet()
      */
     public RecoverAccountServlet() {
-        super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -113,8 +111,8 @@ public class RecoverAccountServlet extends GeneralServlet {
 			Object passArguments[] = new Object[2];
 			
 			String newPass = "UPDATE person SET password = ? WHERE user_id = ?";
-			passArguments[0] = id;
-			passArguments[1] = password;
+			passArguments[0] = password;
+			passArguments[1] = id;
 			boolean result = false;
 		
 			result = MySQL.execute(newPass, passArguments);
