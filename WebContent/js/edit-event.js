@@ -16,3 +16,22 @@ function getUrlVars() {
     });
     return vars;
 }
+
+
+function deleteEvent(){
+	var xhr = new XMLHttpRequest();
+	xhr.onload = function (){
+		if(xhr.status == 200){
+			console.log("deleteEvent status: "+xhr.responseText);
+			if(xhr.responseText == "true"){
+				alert("Successfully Deleted Event");
+				redirectTo("created-events");
+			} else {
+				alert("Delete Event Error");
+			}
+		}
+	}
+	
+	xhr.open("POST", window.location.href, false);
+	xhr.send();
+}

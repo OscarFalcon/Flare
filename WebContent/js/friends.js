@@ -23,8 +23,7 @@ function loadFriends(){
 			
 			document.getElementById("friendsList").innerHTML = htmlCode;
 			console.log("success!");
-		}
-		
+		}	
 	}
 	
 	xhr.open("POST", "http://localhost:8080/friends", false);
