@@ -6,8 +6,20 @@ import java.util.ArrayList;
 import com.flare.database.MySQL;
 
 public class FlareService
-{
-
+{	
+	
+	
+public static String deleteEvent(String event_id){
+	String mysql_string = "DELETE from event where id=?";
+	ArrayList<Object[]> results;
+	Object[] arguments = new Object[]{event_id};
+	int[] result_types = new int[]{};
+	
+	if(MySQL.execute(mysql_string, arguments))
+		return "true";
+	else 
+		return "false";
+}
 
 public static String getCreatedEvents(int user_id){
 	String mysql_string = "SELECT event.id,event.title,event.description,"

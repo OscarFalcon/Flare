@@ -1,6 +1,6 @@
 var htmlCode = "";
 var event = [];
-var eventChosen = [];
+
 
 function getCreatedEvents(){
 	var xhr = new XMLHttpRequest();
@@ -34,10 +34,9 @@ function getCreatedEvents(){
 						'<div style=" text-align:center" data-controltype="image">' +
 							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+id+'.jpg"' + 'onerror="if (this.src != \'/Events/error.jpg\') this.src=\'/Events/error.jpg\';">' +
 						'</div>' + 
-						'<a data-role="button" onclick="redirectTo(\'edit-event?id='+id+'\');" data-icon="edit" data-mini="true"'+
-			                'data-iconpos="right">'+
-			                    'Edit'+
-			                '</a>' +
+						'<div style="text-align:center;"><button style="max-width:100%;height:65;" onclick="redirectTo(\'edit-event?id='+id+'\');">'+
+			                    'Edit' +
+			            '</button><div>' +
 					'</div>' +
 					'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
 			}

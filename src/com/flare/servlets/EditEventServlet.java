@@ -38,8 +38,13 @@ public class EditEventServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		PrintWriter writer = response.getWriter();
+		String result = FlareService.deleteEvent(request.getParameter("id"));
+		System.out.println("deleteEvent status = "+ result);
+		System.out.println("doPOST: deletingEvent = "+ request.getParameter("id"));
+		writer.write(result);
+		writer.close();
+		return;
 
 	}
-
 }
