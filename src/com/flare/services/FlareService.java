@@ -198,7 +198,51 @@ public static String getFriends(int user_id)
 }
 
 
-
-
+public static String getAllUsers(int user_id)
+{
+	String mysql = "SELECT user_id, username, email,first_name,last_name,"
+				   + "aboutme FROM person where user_id != ?";
+	Object[] arguments = {user_id};
+	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
+	
+	ArrayList<Object[]> results = MySQL.executeQuery(mysql, arguments, result_types);
+	
+	if(results == null)
+	{
+		return null;
+	}
+	
+	String friend_id, username,email,firstName,lastName,aboutMe;
+	
+	StringBuilder json = new StringBuilder("{\"friends\":[");
+	int size = results.size();
+	for(int i = 0; i < size; i++)
+	{
+		Object[] row = results.get(i);
+		friend_id = (String) row[0];
+		username = (String) row[1];
+		email = (String) row[2];
+		firstName = (String) row[3];
+		lastName = (String) row[4];
+		aboutMe = (String) row[5];
+		
+		String line = "{\"friend_id\":" + "\""+friend_id+"\"," +
+				"\"username\":" + "\""+username + "\"," +
+				"\"email\":" + "\""+email + "\"," +
+				"\"firstName\":" + "\""+firstName +"\"," +
+				"\"lastName\":" + "\""+lastName + "\"," +
+				"\"aboutMe\":" + "\"" + aboutMe  + "\"" + 
+				"}";
+		
+		if( i + 1 != size)
+		{
+			line += ",";
+		}
+		
+		json.append(line);
+	}
+	json.append("]}");	
+	return json.toString();
+}
 
 }

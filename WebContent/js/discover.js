@@ -11,7 +11,7 @@ function loadDiscover(){
 				htmlCode += ""+
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+
-						'<img class="round" style=" float: left; width: 75px; height: 75px;" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg">'+
+						'<img class="round" style=" float: left; width: 75px; height: 75px;" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg"> onerror="if (this.src != \'/Profile/error.jpg\') this.src=\'/Profile/error.jpg\';"'+
 						'<h2>'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</h2></br>'+
 						response.friends[i].username +'<button style="float:right;font-size:16px;" type="button" onclick="addFriend();">Follow</button>'+
 						'<br>'+'<div style="text-align:center;">'+response.friends[i].aboutMe + '</div>'+

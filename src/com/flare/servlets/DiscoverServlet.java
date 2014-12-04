@@ -40,7 +40,7 @@ public class DiscoverServlet extends BaseServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
-		String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
+		String json = FlareService.getAllUsers(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
 		System.out.println(json);
 		writer.write(json);
 		writer.close();
