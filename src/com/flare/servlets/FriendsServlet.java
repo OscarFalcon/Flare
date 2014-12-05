@@ -32,10 +32,17 @@ public class FriendsServlet extends BaseServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("DOPOST:FriendsServlet - userID: "+request.getParameter("userID"));
 		PrintWriter writer = response.getWriter();
-		String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
-		System.out.println(json);
-		writer.write(json);
+		if(request.getParameter("userID") == null || request.getParameter("friendID") == null){	
+			String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
+			System.out.println(json);
+			writer.write(json);
+		} else {
+			String responseString = FlareService.deleteFriend(request.getParameter("userID"), request.getParameter("friendID"));
+			System.out.println("response string from delete friend:"+ responseString);
+			writer.write(responseString);
+		}
 		writer.close();
 		return;
 	}

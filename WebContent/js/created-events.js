@@ -34,7 +34,7 @@ function getCreatedEvents(){
 						'<div style=" text-align:center" data-controltype="image">' +
 							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+id+'.jpg"' + 'onerror="if (this.src != \'/Events/error.jpg\') this.src=\'/Events/error.jpg\';">' +
 						'</div>' + 
-						'<div style="text-align:center;"><button style="max-width:100%;height:65;" onclick="redirectTo(\'edit-event?id='+id+'\');">'+
+						'<div style="text-align:center;"><button style="font-size:16px;" onclick="redirectTo(\'edit-event?id='+id+'\');">'+
 			                    'Edit' +
 			            '</button><div>' +
 					'</div>' +

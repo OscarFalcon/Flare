@@ -46,7 +46,7 @@ function addFriend(friend_id){
 	   
 	   if(status == 200 && response != "false")
 	   {
-		   alert("successfully added friend!!");
+		   alert("successfully followed friend!");
 	   }
 	   else {
 		   alert("already following");

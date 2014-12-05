@@ -44,13 +44,12 @@ public class DiscoverServlet extends BaseServlet {
 			String json = FlareService.getAllUsers(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
 			System.out.println(json);
 			writer.write(json);
-			writer.close();
-			return;
 		}else {
 			String responseString = FlareService.addFriend(request.getParameter("userID"), request.getParameter("friendID"));
 			writer.write(responseString);
-			writer.close();
 		}
+		writer.close();
+		return;
 	}
 
 }

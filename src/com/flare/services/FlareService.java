@@ -13,12 +13,13 @@ public static String deleteFriend(String userID, String friendID){
 	String status = "false";
 	String mysql_string = "DELETE from friends where user_id = ? and friend_id = ?"; 
 	Object[] arguments = new Object[]{userID, friendID};
-	
-			
+
 	if(MySQL.execute(mysql_string, arguments)){
 		status = "true";
 		System.out.println("Deleted friend: "+friendID);
 	}
+	else 
+		System.out.println("SQL execute failed");
 	
 	return status;
 }
