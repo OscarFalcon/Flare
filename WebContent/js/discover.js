@@ -49,7 +49,7 @@ function addFriend(friend_id){
 		   alert("successfully added friend!!");
 	   }
 	   else {
-		   alert("something went wrong");
+		   alert("already following");
 	   }
 	}
 	request.open("POST","http://localhost:8080/discover",true);

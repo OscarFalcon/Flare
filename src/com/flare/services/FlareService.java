@@ -8,16 +8,39 @@ import com.flare.database.MySQL;
 public class FlareService
 {	
 	
-	
-	
-public static String addFriend(String userID, String friendID){
+
+public static String deleteFriend(String userID, String friendID){
 	String status = "false";
-	String mysql_string = "INSERT into friends(user_id, friend_id) VALUES(?,?)";
+	String mysql_string = "DELETE from friends where user_id = ? and friend_id = ?"; 
 	Object[] arguments = new Object[]{userID, friendID};
 	
+			
 	if(MySQL.execute(mysql_string, arguments)){
-		status="true";
-		System.out.println("Added friend "+friendID);
+		status = "true";
+		System.out.println("Deleted friend: "+friendID);
+	}
+	
+	return status;
+}
+
+public static String addFriend(String userID, String friendID){
+	String status = "false";
+	//check if friend already exists
+	String mysql_string  = "SELECT * from friends where user_id = ? and friend_id = ?";
+	Object[] arguments = new Object[]{userID, friendID};
+	int[] result_types = new int[]{MySQL.INTEGER, MySQL.INTEGER};
+	ArrayList<Object[]> results;
+	
+	results = MySQL.executeQuery(mysql_string, arguments, result_types);
+	if(results.isEmpty()){
+		//add friend to user
+		mysql_string = "INSERT into friends(user_id, friend_id) VALUES(?,?)";
+		arguments = new Object[]{userID, friendID};
+		
+		if(MySQL.execute(mysql_string, arguments)){
+			status="true";
+			System.out.println("Added friend "+friendID);
+		}
 	}
 	
 	return status;
