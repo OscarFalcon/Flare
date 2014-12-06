@@ -3,8 +3,6 @@ window.CodiqaControls && window.CodiqaControls.register('googlemaps', 'googlemap
    });
    
 function start(control){
-
-console.log("map.js")
 	
 var styles = [
     {

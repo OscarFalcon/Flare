@@ -52,7 +52,7 @@ public class EditProfileServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userID;
 		HttpSession session;
-		final String SAVE_DIR = System.getProperty("user.home") + "/git/Flare/WebContent/Profile";
+		final String SAVE_DIR = getServletContext().getRealPath("/") + "/Profile";
 		
 		Object arguments[] = new Object[6];
 		

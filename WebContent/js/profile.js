@@ -8,4 +8,19 @@ function getProfile(){
 }
 
 
+function logout()
+{
+	var xhr = new XMLHttpRequest();
+	xhr.onload = function ()
+	{
+		if(xhr.status == 200)
+			{
+				redirectTo("login");
+			}
+	};
+	xhr.open("POST", "http://localhost:8080/logout",false);
+	xhr.send();
+	
+}
+
 

@@ -52,3 +52,10 @@ body {
        height: 200px;
    }
    
+   .hidden
+    {
+		display: none;
+	}
+   
+   
+   

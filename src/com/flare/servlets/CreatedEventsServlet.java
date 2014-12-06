@@ -44,7 +44,8 @@ public class CreatedEventsServlet extends BaseServlet {
 		 * Load the events onto the feed!
 		 */
 		String json = FlareService.getCreatedEvents(Integer.parseInt( (String) request.getSession().getAttribute("user_id")));
-		
+		if(json == null)
+			json = "{}";
 		
 		System.out.println("JSON: " + json);
 		PrintWriter writer = response.getWriter();
