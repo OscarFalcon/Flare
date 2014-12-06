@@ -63,7 +63,7 @@ public class loginServlet extends GeneralServlet {
 		{
 			session = request.getSession(true);
 			session.setAttribute("loginCount",0);
-			session.setMaxInactiveInterval(120);// will log member out after 2 minute
+			session.setMaxInactiveInterval(1200);// will log member out after 2 minute
 			session.setAttribute("loggedIn",false);
 		}			
 		

@@ -6,9 +6,7 @@ import java.io.ObjectInputStream;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,10 +14,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 
 
-
 public class MySQL {
 	
-	private  static Connection connection = null;
+	private  static java.sql.Connection connection = null;
 	private  static BasicDataSource dataSource = null;
 
     
@@ -142,14 +139,14 @@ public class MySQL {
 	 * This method does not close or open any connections
 	 * 
 	 *  **/
-	private static boolean execute(PreparedStatement ps) 
+	private static boolean execute(java.sql.PreparedStatement preparedStatement) 
 	{
-		if( ps ==null || isClosed() )
+		if( preparedStatement ==null || isClosed() )
 			return false;
 		try 
 		{
-			ps.execute();
-			ps.getConnection().commit();
+			preparedStatement.execute();
+			preparedStatement.getConnection().commit();
 			return true;
 		}
 		catch (SQLException e) 
@@ -165,16 +162,16 @@ public class MySQL {
 	* helper method that executes a query from a prepared statement that returns a resultSet
 	* This method does not open or close any connections 
 	* **/
-	private static final ResultSet executeQuery(PreparedStatement ps) 
+	private static final ResultSet executeQuery(java.sql.PreparedStatement preparedStatement) 
 	{
 		ResultSet rs = null;
 		
-		if( ps == null || isClosed() )
+		if( preparedStatement == null || isClosed() )
 			return null;
 		try
 		{
-			rs = ps.executeQuery();
-			ps.getConnection().commit();
+			rs = preparedStatement.executeQuery();
+			preparedStatement.getConnection().commit();
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
@@ -187,9 +184,9 @@ public class MySQL {
 	/** 
 	* helper method that prepares a statement based on the given string 
 	**/
-    private static final PreparedStatement prepareStatement(String statement)
+    private static final java.sql.PreparedStatement prepareStatement(String statement)
     {
-    	PreparedStatement ps;
+    	java.sql.PreparedStatement ps;
     	
     	if(isClosed())
     	{
@@ -209,7 +206,7 @@ public class MySQL {
     	return ps;
     }
 
-    private static final boolean setValue(PreparedStatement preparedStatement,int position, Object value)
+    private static final boolean setValue(java.sql.PreparedStatement preparedStatement,int position, Object value)
     {
     	
     	try
@@ -278,7 +275,7 @@ public class MySQL {
     public static final ArrayList<Object[]> executeQuery(String mysql_string, Object[] arguments, int[] result_types)
     {	
 		int length,i;
-		PreparedStatement preparedStatement = null;
+		java.sql.PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		ArrayList<Object[]> list = null;
 		
@@ -423,7 +420,7 @@ public class MySQL {
     
 	public static final boolean execute(String mysql_string, Object[] arguments){
 		int length,i;
-		PreparedStatement preparedStatement = null;
+		java.sql.PreparedStatement preparedStatement = null;
 						
 			if(mysql_string == null || arguments == null)
 			{
