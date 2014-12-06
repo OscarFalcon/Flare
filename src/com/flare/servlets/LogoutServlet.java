@@ -2,7 +2,7 @@ package com.flare.servlets;
 
 import java.io.IOException;
 
-import javax.jms.Session;
+//import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

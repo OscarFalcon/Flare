@@ -49,12 +49,13 @@ function deleteFriend(friend_id){
 	   if(status == 200 && response != "false")
 	   {
 		   alert("successfully unfollowed friend!");
+		   redirectTo("friends");
 	   }
 	   else {
 		   alert("something went wrong");
 	   }
 	}
-	request.open("POST","http://localhost:8080/discover",true);
+	request.open("POST","http://localhost:8080/friends",true);
 	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	request.send(postData); 
 	return;
