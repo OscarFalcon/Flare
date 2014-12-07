@@ -19,9 +19,11 @@ function loadFriends(){
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+
 						'<img class="round" style=" float: left; width: 75px; height: 75px" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg">'+
-						'<div onclick="redirectTo(\'profile?friend_id='+response.friends[i].friend_id+'\');"><h2>'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</h2></div>';
+						'<a style="font-size:20px;" onclick="redirectTo(\'profile?friend_id='+response.friends[i].friend_id+'\');">'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</a>';
 						if(!id){
-							htmlCode += '<button style="float:right;font-size:16px;" type="button" onclick="deleteFriend('+response.friends[i].friend_id+');">UnFollow</button></br>'
+							htmlCode += '<button style="float:right;font-size:16px;" type="button" onclick="deleteFriend('+response.friends[i].friend_id+');">UnFollow</button></br>';
+						}else {
+							htmlCode += '<button style="float:right;font-size:16px;" type="button" onclick="addFriend('+response.friends[i].friend_id+');">Follow</button></br>';
 						}
 						htmlCode += response.friends[i].username + '</br>'+
 						response.friends[i].aboutMe + '</br>' + 

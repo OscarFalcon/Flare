@@ -47,3 +47,32 @@ function redirectTo(contextRoot)
 }
 
 
+function addFriend(friend_id){
+	var user_id=sessionStorage.getItem("userID");
+	var postData;
+	postData="userID="+user_id+
+	"&friendID="+friend_id;
+	
+	var request = new XMLHttpRequest();
+	request.onload = function () {
+
+	   var status = request.status; // HTTP response status, e.g., 200 for "200 OK" (Request was successful)
+	   var response = request.responseText; // Returned data, e.g., an HTML document.
+	   console.log("status: " + status);
+	   console.log("response: " + response);
+	   
+	   if(status == 200 && response != "false")
+	   {
+		   alert("successfully followed friend!");
+	   }
+	   else {
+		   alert("already following");
+	   }
+	}
+	request.open("POST","http://localhost:8080/discover",true);
+	request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	request.send(postData); 
+	return;
+	
+}
+

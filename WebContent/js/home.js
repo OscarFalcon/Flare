@@ -20,7 +20,7 @@ function getEvents(){
 							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+response.events[i].eventId+'.jpg"' + 'onerror="if (this.src != \'/Events/error.jpg\') this.src=\'/Events/error.jpg\';">' +
 						'</div>' +
 						'<h3 style=" text-align:center">' + 
-							'<img class="round" style="width: 50px; height: 50px" src="http://localhost:8080/Profile/' + response.events[i].friendId + '.jpg">By <a href=\"#profile\">' + response.events[i].friendUsername+'</a> on ' + response.events[i].eventDate + response.events[i].eventTime +
+							'<img class="round" style="width: 50px; height: 50px" src="http://localhost:8080/Profile/' + response.events[i].friendId + '.jpg">By <a onclick="redirectTo(\'profile?friend_id='+response.events[i].friendId+'\');">' + response.events[i].friendUsername+'</a> on ' + response.events[i].eventDate + response.events[i].eventTime +
 							'<b style="font-size:15px"> 553 going </b>' + 
 						'</h3>' +
 						'<div style="text-align:center"><button type="button" style="font-size:16px;">Check In</button></div>' + 
