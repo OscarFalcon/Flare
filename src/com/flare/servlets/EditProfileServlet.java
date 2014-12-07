@@ -1,13 +1,26 @@
 package com.flare.servlets;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Locale;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +33,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.io.IOUtils;
 
 import com.flare.database.MySQL;
+import com.flare.services.FlareUtils;
 
 @MultipartConfig(fileSizeThreshold=1024*1024*2, // 2MB
 maxFileSize=1024*1024*10,      					// 10MB
@@ -53,10 +67,11 @@ public class EditProfileServlet extends BaseServlet {
 		String userID;
 		HttpSession session;
 		final String SAVE_DIR = getServletContext().getRealPath("/") + "/Profile";
+		final String SAVE_DIR_WORKSPACE = System.getProperty("user.home")
+				+ File.separator + "git" +File.separator + "Flare" +File.separator + "WebContent" + File.separator + "Profile";
+		
 		
 		Object arguments[] = new Object[6];
-		
-		
 		System.out.println("EditProfileServlet:POST");
 		
 		if(request == null)
@@ -142,12 +157,48 @@ public class EditProfileServlet extends BaseServlet {
 			response.setStatus(200);
 			return;
 			
-		} else {
-			System.out.println("writing photo!");
-			photoPart.write(SAVE_DIR + File.separator + userID + ".jpg");
-			System.out.println("Photo has been written!");
-			return;
 		}
+		
+		InputStream in = null;
+		BufferedImage image = null;
+		OutputStream out = null;
+		OutputStream out2 = null;
+		try
+		{
+			in = photoPart.getInputStream();
+			image = ImageIO.read(in);
+			out = new FileOutputStream(SAVE_DIR + File.separator + userID + ".jpg");
+			FlareUtils.saveImageAsJPEG(image,out,100);
+
+			out2 = new FileOutputStream(SAVE_DIR_WORKSPACE + File.separator + userID+ ".jpg");
+			FlareUtils.saveImageAsJPEG(image,out2,100);
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			if( in != null)
+			{
+				in.close();
+			}
+			if(out != null)
+			{
+				out.close();
+			}
+			image.flush();
+		}		
 	}
+	
+	
+	
+	
+	   
+	   
+	
+	
+	
 
 }
