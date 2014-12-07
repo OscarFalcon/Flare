@@ -1,10 +1,12 @@
 
 console.log("confirm-event.js");
 
-window.CodiqaControls && window.CodiqaControls.register('googlemaps', 'googlemapsjs1',{
-    ready: start
-});
-
+window.onload = function ()
+{
+	window.CodiqaControls && window.CodiqaControls.register('googlemaps', 'googlemapsjs1',{
+	    ready: start
+	});
+};
 
 var styles = [
               {
