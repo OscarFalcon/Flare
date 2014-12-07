@@ -1,5 +1,11 @@
 
+
 function loadFriends(){
+	var postData = "";
+	if(id = getUrlVars()["friend_id"]){
+		postData = "friendID="+id;
+		console.log("friendID="+id);
+	}
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function (){
 		if(xhr.status == 200){
@@ -13,8 +19,11 @@ function loadFriends(){
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+
 						'<img class="round" style=" float: left; width: 75px; height: 75px" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg">'+
-						'<h2>'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</h2>'+'<button style="float:right;font-size:16px;" type="button" onclick="deleteFriend('+response.friends[i].friend_id+');">UnFollow</button></br>'
-						response.friends[i].username + '</br>'+
+						'<div onclick="redirectTo(\'profile?friend_id='+response.friends[i].friend_id+'\');"><h2>'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</h2></div>';
+						if(!id){
+							htmlCode += '<button style="float:right;font-size:16px;" type="button" onclick="deleteFriend('+response.friends[i].friend_id+');">UnFollow</button></br>'
+						}
+						htmlCode += response.friends[i].username + '</br>'+
 						response.friends[i].aboutMe + '</br>' + 
 					'</div>'+
 				'</div>' +
@@ -25,9 +34,9 @@ function loadFriends(){
 			console.log("success!");
 		}	
 	}
-	
-	xhr.open("POST", "http://localhost:8080/friends", false);
-	xhr.send();
+	xhr.open("POST","http://localhost:8080/friends",true);
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.send(postData);
 }
 
 

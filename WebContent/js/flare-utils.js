@@ -32,6 +32,14 @@ function setPhotoHTML(input,imgElementID)
 	return true;
 }
 
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
 function redirectTo(contextRoot)
 {
 	window.location.href = "http://localhost:8080/"+contextRoot;

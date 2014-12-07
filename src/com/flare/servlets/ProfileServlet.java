@@ -39,7 +39,8 @@ public class ProfileServlet extends BaseServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user_id = (String) request.getSession().getAttribute("user_id");
+		String user_id = request.getParameter("friendID");
+		
 		String sql = "SELECT username,email,first_name,last_name,aboutme FROM person WHERE user_id = ?";
 		String username,email,firstname,lastname,aboutme;
 		
