@@ -31,7 +31,9 @@ function loadFriends(){
 				'</div>' +
 				'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
 			}
-			
+			if(id){
+				document.getElementById("friendsBackButton").setAttribute("onclick", "redirectTo('profile?friend_id="+id+"');");
+			}
 			document.getElementById("friendsList").innerHTML = htmlCode;
 			console.log("success!");
 		}	
