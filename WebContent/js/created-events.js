@@ -1,5 +1,3 @@
-var event = [];
-
 
 function getCreatedEvents(){
 	var postData = "";
@@ -22,12 +20,12 @@ function getCreatedEvents(){
 				var date = response.events[i].eventDate;
 				var time = response.events[i].eventTime;
 				var attending = response.events[i].attending;
-				event["title"+id] = title;
-				event["description"+id]=description;
-				event["date"+id]=date;
-				event["time"+id]=time;
-				event["attending"+id]=attending;
-				console.log("Loop" + i + "array: "+event["title"+id]);
+				sessionStorage["title"+id] = title;
+				sessionStorage["description"+id]=description;
+				sessionStorage["date"+id]=date;
+				sessionStorage["time"+id]=time;
+				sessionStorage["attending"+id]=attending;
+				console.log("Loop" + i + "array: "+sessionStorage["title"+id]);
 				htmlCode += ""+
 					'<div data-role="content">' +
 						'<h2 id="title'+id+'" style="text-align:center">' + title + '<h2>' +
@@ -46,6 +44,9 @@ function getCreatedEvents(){
 						}
 					htmlCode += '</div>' +
 					'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
+			}
+			if(id){
+				document.getElementById("createdEventsBackButton").setAttribute("onclick", "redirectTo('profile?friend_id="+friendID+"');");
 			}
 			document.getElementById("events").innerHTML = htmlCode;
 			console.log("success!");
