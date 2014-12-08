@@ -39,7 +39,7 @@ public class FriendsServlet extends BaseServlet {
 			String json = FlareService.getFriends(Integer.parseInt((String)request.getSession().getAttribute("user_id")));
 			System.out.println(json);
 			writer.write(json);
-		} else if(request.getParameter("friendID") != null){ // get friends friends
+		} else if(request.getParameter("userID") == null && request.getParameter("friendID") != null){ // get friends friends
 			String json = FlareService.getFriends(Integer.parseInt((String)request.getParameter("friendID")));
 			System.out.println(json);
 			writer.write(json);

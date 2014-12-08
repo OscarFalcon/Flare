@@ -49,7 +49,7 @@ function deleteFriend(friend_id){
 	var postData;
 	postData="userID="+user_id+
 	"&friendID="+friend_id;
-	console.log("userID:"+user_id+"friendID:"+friend_id);
+	console.log("Delete Friend - userID:"+user_id+"friendID:"+friend_id);
 	
 	var request = new XMLHttpRequest();
 	request.onload = function () {
