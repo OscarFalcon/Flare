@@ -74,3 +74,6 @@ function deleteFriend(friend_id){
 	return;
 	
 }
+
+
+loadFriends();

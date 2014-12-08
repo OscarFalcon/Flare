@@ -1,4 +1,3 @@
-var htmlCode = "";
 var event = [];
 
 
@@ -14,6 +13,7 @@ function getCreatedEvents(){
 		if(xhr.status == 200){
 			console.log("response: " + xhr.responseText);
 			var response = JSON.parse(xhr.responseText);
+			var htmlCode = "";
 			
 			for (i=0; i<response.events.length; i++){
 				var id = response.events[i].eventId;
@@ -22,7 +22,12 @@ function getCreatedEvents(){
 				var date = response.events[i].eventDate;
 				var time = response.events[i].eventTime;
 				var attending = response.events[i].attending;
-				console.log("Loop" + i);
+				event["title"+id] = title;
+				event["description"+id]=description;
+				event["date"+id]=date;
+				event["time"+id]=time;
+				event["attending"+id]=attending;
+				console.log("Loop" + i + "array: "+event["title"+id]);
 				htmlCode += ""+
 					'<div data-role="content">' +
 						'<h2 id="title'+id+'" style="text-align:center">' + title + '<h2>' +
@@ -51,10 +56,3 @@ function getCreatedEvents(){
 	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send(postData);
 }
-
-function showEvents(){
-	document.getElementById("events").innerHTML = htmlCode;
-	console.log("success!");
-}
-
-getCreatedEvents();

@@ -1,6 +1,7 @@
 var id = getUrlVars()["id"];
 
 function getEditEvent(){
+	console.log("getEditEvent" + event["title"+id]);
 	document.getElementById("eventpicture").src = "http://localhost:8080/Events/"+id+".jpg";
 	document.getElementById("eventTitleField").value = event["title"+id];
 	document.getElementById("eventDescriptionField").value = event["description"+id];
