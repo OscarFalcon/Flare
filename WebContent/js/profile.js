@@ -16,20 +16,20 @@ function getProfile(){
 			document.getElementById("profileName").innerHTML = response.firstname + " " + response.lastname;
 			document.getElementById("profileEmail").innerHTML = response.email;
 			document.getElementById("profileAboutMe").innerHTML = response.aboutme;
-			var htmlCode = "";
-		}
+			//var htmlCode = "";
+		};
 		request.open("POST","http://localhost:8080/profile",true);
 		request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		request.send(postData); 
 		return;
-	}else {
-		console.log("parameter Does not exist");
-		document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
-		document.getElementById("profileName").innerHTML = sessionStorage.firstname + " " + sessionStorage.lastname;
-		document.getElementById("profileEmail").innerHTML = sessionStorage.email;
-		document.getElementById("profileAboutMe").innerHTML = sessionStorage.aboutme;
-		console.log("success!");
 	}
+	console.log("parameter Does not exist");
+	document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
+	document.getElementById("profileName").innerHTML = sessionStorage.firstname + " " + sessionStorage.lastname;
+	document.getElementById("profileEmail").innerHTML = sessionStorage.email;
+	document.getElementById("profileAboutMe").innerHTML = sessionStorage.aboutme;
+	console.log("success!");
+	
 }
 
 

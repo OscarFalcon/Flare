@@ -116,16 +116,20 @@ public static String getCreatedEvents(int user_id){
 	
 public static String getEvents(int user_id)
 {
-	String mysql_string = "SELECT event.id,event.title,event.description,event.locationLat,"
-			  + "event.locationLong,event.date,event.time,event.type,event.attending,"
-			  + "event.checked_in,friends.friend_id,person.username from event INNER JOIN"
-			  + " friends ON friends.friend_id = event.user_id INNER JOIN person ON "
-			  + "friends.friend_id = person.user_id WHERE friends.user_id = ?";
+	String mysql_string = "SELECT event.id,event.title,event.description,event.locationLat," +
+			"event.locationLong,event.date,event.time,event.type,event.attending," + 
+			"event.checked_in,friends.friend_id,person.username,attending_event.user_id " + 
+			"FROM event INNER JOIN friends ON friends.friend_id = event.user_id " +
+			"INNER JOIN person ON friends.friend_id = person.user_id LEFT JOIN attending_event ON " +
+			"event.id = attending_event.event_id AND attending_event.user_id = ? WHERE friends.user_id = ?";
+			
+			
+			
 
 	ArrayList<Object[]> results;
-	Object[] arguments = new Object[]{user_id};
+	Object[] arguments = new Object[]{user_id,user_id};
 	int[] result_types = new int[]{MySQL.INTEGER,MySQL.STRING,MySQL.STRING,MySQL.BIG_DECIMAL,MySQL.BIG_DECIMAL,MySQL.STRING,
-						   MySQL.STRING,MySQL.STRING,MySQL.INTEGER,MySQL.INTEGER,MySQL.INTEGER,MySQL.STRING};
+						   MySQL.STRING,MySQL.STRING,MySQL.INTEGER,MySQL.INTEGER,MySQL.INTEGER,MySQL.STRING,MySQL.INTEGER};
 	
 	
 	results = MySQL.executeQuery(mysql_string, arguments, result_types);
@@ -143,9 +147,9 @@ public static String getEvents(int user_id)
 		Object tmp[]; 
 		String line = null;
 		tmp = results.get(i);
-		String eventTitle,eventDescription,eventDate,eventTime,eventType,friendUsername;
+		String eventTitle,eventDescription,eventDate,eventTime,eventType,friendUsername,amIattending;
 		BigDecimal locationLat,locationLog;
-		int eventId,eventAttending,eventCheckedIn,friendId;
+		int eventId,eventAttending,eventCheckedIn,friendId,amIattendingId;
 	
 	
 		eventId = (int) tmp[0];
@@ -160,6 +164,14 @@ public static String getEvents(int user_id)
 		eventCheckedIn = (int) tmp[9];
 		friendId = (int) tmp[10];
 		friendUsername = (String) tmp[11];
+		amIattendingId = (int) tmp[12];
+		
+		if(amIattendingId == 0)
+			amIattending = "no";
+		else
+			amIattending = "yes";
+		
+		
 		
 		line  = "{ \"eventId\":" + "\"" + eventId + "\"," +
 			"\"eventTitle\":" + "\""+ eventTitle + "\"," +
@@ -169,11 +181,13 @@ public static String getEvents(int user_id)
 			"\"eventType\":" + "\"" + eventType + "\"," +
 			"\"locationLat\":" +"\""+ locationLat + "\"," +
 			"\"locationLog\":" +"\""+locationLog + "\"," + 
-			"\"attending:\":" + "\""+eventAttending + "\"," +
+			"\"attending\":" + "\""+eventAttending + "\"," +
 			"\"checkedIn\":" + "\""+eventCheckedIn +"\"," +
 			"\"friendId\":" + "\""+friendId + "\"," +
-			"\"friendUsername\":" +"\""+ friendUsername + "\""
+			"\"friendUsername\":" +"\""+ friendUsername + "\","+
+			"\"amIattending\": " +"\""+amIattending +"\""
 			+ "}";
+		
 		if( (i + 1) != size)
 		{
 		line = line + ",";
@@ -280,5 +294,10 @@ public static String getAllUsers(int user_id)
 	json.append("]}");	
 	return json.toString();
 }
+
+
+
+
+
 
 }

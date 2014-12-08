@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.flare.database.MySQL;
 import com.flare.services.FlareService;
 
+
 @WebServlet("/home")
 public class homeServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
