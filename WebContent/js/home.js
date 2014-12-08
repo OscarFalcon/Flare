@@ -24,8 +24,6 @@ function getEvents(){
 					attendingButton = '<button id="'+response.events[i].eventId +'" type="button" class="notAttendingEventButton" onclick="processRequest(this.id)">Attend Event</button>';
 				}
 				
-				
-				
 				htmlCode += ""+
 					'<div data-role="content">' +
 						'<h2 style="text-align:center">' + response.events[i].eventTitle + '<h2>' +
@@ -33,14 +31,10 @@ function getEvents(){
 							'<img style="max-width: 100%; width: 400px; height: auto; max-height: 300px;" src="http://localhost:8080/Events/'+response.events[i].eventId+'.jpg"' + 'onerror="if (this.src != \'/Events/error.jpg\') this.src=\'/Events/error.jpg\';">' +
 						'</div>' +
 						'<h3 style=" text-align:center">' + 
-							'<img class="round" style="width: 50px; height: 50px" src="http://localhost:8080/Profile/' + response.events[i].friendId + '.jpg">By <a onclick="redirectTo(\'profile?friend_id='+response.events[i].friendId+'\');">' + response.events[i].friendUsername+'</a> on ' + response.events[i].eventDate + response.events[i].eventTime +
+							'<img class="round" style="width: 50px; height: 50px" src="http://localhost:8080/Profile/' + response.events[i].friendId + '.jpg">By <a onclick="redirectTo(\'profile?friend_id='+response.events[i].friendId+'\');">' + response.events[i].friendUsername+'</a> on ' + response.events[i].eventDate +" "+ response.events[i].eventTime +
 							'<br></br>' + 
-							'<b id ="checkInLabel' +response.events[i].eventId + '" style="font-size:15px">Attending: ' +  response.events[i].attending  + '</b>' + 
+							'<b id ="checkInLabel' +response.events[i].eventId + '" style="font-size:15px">Attending: ' +  response.events[i].attending  + '&nbsp;&nbsp;&nbsp;</b>' + attendingButton +
 						'</h3>' +
-						'<div style="text-align:center">' +
-							attendingButton +
-						'</div>' + 
-						'<h3 style="text-align:center"><b>Details</b></h3>' + 
 						'<div data-controltype="htmlblock" style="text-align:center">' +
 							'<p>' + response.events[i].eventDescription + '</p>' +
 						'</div>' +

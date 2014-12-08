@@ -40,13 +40,18 @@ public class CreatedEventsServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("CreatedEventsServlet: doPost");
+		String json = "";
 		/**
 		 * Load the events onto the feed!
 		 */
-		String json = FlareService.getCreatedEvents(Integer.parseInt( (String) request.getSession().getAttribute("user_id")));
+		if(request.getParameter("friendID") == null){
+			json = FlareService.getCreatedEvents(Integer.parseInt( (String) request.getSession().getAttribute("user_id")));
+			
+		} else {
+			json = FlareService.getCreatedEvents(Integer.parseInt( (String) request.getParameter("friendID")));
+		}
 		if(json == null)
 			json = "{}";
-		
 		System.out.println("JSON: " + json);
 		PrintWriter writer = response.getWriter();
 		writer.write(json);

@@ -99,7 +99,7 @@ public static String getCreatedEvents(int user_id){
 				"\"eventDate\":" + "\"" + eventDate + "\"," +
 				"\"eventTime\":" + "\"" + eventTime +"\"," +
 				"\"eventType\":" + "\"" + eventType + "\"," +
-				"\"attending:\":" + "\""+eventAttending + "\"," +
+				"\"attending\":" + "\""+eventAttending + "\"," +
 				"\"checkedIn\":" + "\""+eventCheckedIn +"\"" +
 				"}";
 			if( (i + 1) != size)

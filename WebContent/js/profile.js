@@ -10,6 +10,7 @@ function getProfile(){
 			console.log("response: " + request.responseText);
 			var response = JSON.parse(request.responseText);
 			document.getElementById("friendsButton").setAttribute("onclick", "redirectTo('friends?friend_id="+id+"');");
+			document.getElementById("createdEventsButton").setAttribute("onclick", "redirectTo('created-events?friend_id="+id+"');")
 			document.getElementById("logoutButton").remove();
 			document.getElementById("editProfileButton").remove();
 			document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+id +".jpg";
