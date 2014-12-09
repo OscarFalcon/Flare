@@ -1,11 +1,13 @@
 var selection = [];
-var value;
+sessionStorage.value = "";
 $(document).keypress(function(e) {
     if(e.which == 13) {
     	sessionStorage.value = document.getElementById("searchinput2").value;
-    	redirectTo('discover');
+    	loadDiscover();
     }
+   
 });
+
 function loadDiscover(){
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function (){
@@ -21,12 +23,23 @@ function loadDiscover(){
 				selection.push(response.friends[i].firstName + " " + response.friends[i].lastName);
 				selection.push(response.friends[i].username);
 				$("#searchinput2").autocomplete( { source: selection });
-
 				
+				if(sessionStorage.value == "")
+				{
+					htmlCode += ""+
+					'<div data-role="content">'+
+						'<div style="" data-controltype="image">'+
+							'<img class="round" style=" float: left; width: 75px; height: 75px;" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg" onerror="if (this.src != \'/Profile/error.jpg\') this.src=\'/Profile/error.jpg\';">'+
+							'<a style="font-size:20px;" onclick="redirectTo(\'profile?friend_id='+response.friends[i].friend_id+'\');">'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</a></br>'+
+							response.friends[i].username +'<button style="float:right;font-size:16px;" type="button" onclick="addFriend('+response.friends[i].friend_id+');">Follow</button>'+
+							'<br>'+'<div style="text-align:center;">'+response.friends[i].aboutMe + '</div>'+
+						'</div>'+
+					'</div>' +
+					'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
+				}
 				
 				console.log("value is " + sessionStorage.value);
 				if(sessionStorage.value == response.friends[i].username || sessionStorage.value == response.friends[i].firstName + " " + response.friends[i].lastName)
-				
 				{
 					htmlCode += ""+
 					'<div data-role="content">'+
@@ -39,11 +52,10 @@ function loadDiscover(){
 					'</div>' +
 					'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
 
-
 				}
-
+				
 			}
-			
+			sessionStorage.value = "";
 			
 			document.getElementById("results").innerHTML = htmlCode;
 
