@@ -10,9 +10,11 @@ function getProfile(){
 			console.log("response: " + request.responseText);
 			var response = JSON.parse(request.responseText);
 			document.getElementById("friendsButton").setAttribute("onclick", "redirectTo('friends?friend_id="+id+"');");
+			document.getElementById("createdEventsButton").setAttribute("onclick", "redirectTo('created-events?friend_id="+id+"');")
 			document.getElementById("logoutButton").remove();
 			document.getElementById("editProfileButton").remove();
 			document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+id +".jpg";
+			document.getElementById("profilePicture").setAttribute("onerror","if (this.src != '/Profile/error.jpg') this.src='/Profile/error.jpg';")
 			document.getElementById("profileName").innerHTML = response.firstname + " " + response.lastname;
 			document.getElementById("profileEmail").innerHTML = response.email;
 			document.getElementById("profileAboutMe").innerHTML = response.aboutme;
@@ -25,6 +27,7 @@ function getProfile(){
 	}
 	console.log("parameter Does not exist");
 	document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
+	document.getElementById("profilePicture").setAttribute("onerror","if (this.src != '/Profile/error.jpg') this.src='/Profile/error.jpg';")
 	document.getElementById("profileName").innerHTML = sessionStorage.firstname + " " + sessionStorage.lastname;
 	document.getElementById("profileEmail").innerHTML = sessionStorage.email;
 	document.getElementById("profileAboutMe").innerHTML = sessionStorage.aboutme;
@@ -47,5 +50,4 @@ function logout()
 	xhr.send();
 	
 }
-
 

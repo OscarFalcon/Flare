@@ -17,7 +17,7 @@ function loadFriends(){
 				htmlCode += ""+
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+
-						'<img class="round" style=" float: left; width: 75px; height: 75px" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg">'+
+						'<img class="round" style=" float: left; width: 75px; height: 75px" src="http://localhost:8080/Profile/'+ response.friends[i].friend_id+'.jpg" onerror="if (this.src != \'/Profile/error.jpg\') this.src=\'/Profile/error.jpg\';">'+
 						'<a style="font-size:20px;" onclick="redirectTo(\'profile?friend_id='+response.friends[i].friend_id+'\');">'+ response.friends[i].firstName+ ' ' + response.friends[i].lastName + '</a>';
 						if(!id){
 							htmlCode += '<button style="float:right;font-size:16px;" type="button" onclick="deleteFriend('+response.friends[i].friend_id+');">UnFollow</button></br>';
@@ -73,3 +73,6 @@ function deleteFriend(friend_id){
 	return;
 	
 }
+
+
+loadFriends();

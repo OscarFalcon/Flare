@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="/js/flare-utils.js"></script>
-  <script src="/js/created-events.js"></script>
-  <script type="/js/userSession.js"></script>
+
   <meta charset="utf-8">
   <title>Flare</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,15 +16,19 @@
   <script src="/js/jquery.mobile-1.3.1.min.js"></script>
   <script src="/js/codiqa.ext.min.js"></script>
   
+  <script src="/js/flare-utils.js"></script>
+  <script src="/js/created-events.js"></script>
+  <script type="/js/userSession.js"></script>
+  
 
  <meta charset=utf-8 />
  
 </head>
-<body onload="showEvents()">
+<body onload="getCreatedEvents();">
 <!-- ******************************** WHERE CREATED EVENTS ENDS ************************ -->
 <div data-role="page" data-control-title="Events Page" id="createdEvents">
     <div id="header" data-theme="a" data-role="header">
-        <a data-role="button" data-transition="flip" onclick="redirectTo('profile')" class="ui-btn-left">
+        <a id="createdEventsBackButton" data-role="button" data-transition="flip" onclick="redirectTo('profile')" class="ui-btn-left">
             Back
         </a>
         <h3>
@@ -34,7 +36,6 @@
         </h3>
     </div>
     <div data-role="content" id="events">
-        
     </div>
     <div data-role="tabbar" data-iconpos="top" data-theme="a">
         <ul>
