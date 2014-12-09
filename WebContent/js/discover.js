@@ -1,12 +1,16 @@
+
 function loadDiscover(){
 	var xhr = new XMLHttpRequest();
-	xhr.onload = function (){
-		if(xhr.status == 200){
+	xhr.onload = function ()
+	{
+		if(xhr.status == 200)
+		{
 			console.log("response: " + xhr.responseText);
 			var response = JSON.parse(xhr.responseText);
 			
 			var htmlCode = "";
-			for (i=0; i<response.friends.length; i++){
+			for (var i=0; i<response.friends.length; i++)
+			{
 				console.log("Loop" + i);
 				htmlCode += ""+
 				'<div data-role="content">'+
@@ -27,5 +31,43 @@ function loadDiscover(){
 	
 	xhr.open("POST", "http://localhost:8080/discover", false);
 	xhr.send();
+	
+	
+	
+	
+	
+	$("#searchinput2").autocomplete({
+	      source: function(request, response){
+	           $.ajax({
+	               type: "POST",
+	               url: "http://localhost:8080/discover/people",
+	               data: "action=getSuggestions",
+	               contentType: "application/json; charset=utf-8",
+	               dataType: "json",
+	               success: function (msg) {
+	            	  
+	                   response($.parseJSON(msg.d).results);
+	               },
+	               error: function (msg) {
+	                   alert(msg.status + ' ' + msg.statusText);
+	               }
+	           });
+	       },
+
+	       select: function (event, ui) {
+	           $("#searchinput2").val(ui.item.label);
+	           return false;
+	       }
+	})
+	.data( "autocomplete" )._renderItem = function( ul, item ) {
+		return $( "<li></li>" )
+			.data( "item.autocomplete", item )
+			.append( "<a><strong>" + item.label )
+			.appendTo( ul );
+		};	
+	
+	
+	
+	
 }
 
