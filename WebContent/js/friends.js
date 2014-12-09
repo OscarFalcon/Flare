@@ -13,8 +13,7 @@ function loadFriends(){
 			var response = JSON.parse(xhr.responseText);
 			
 			var htmlCode = "";
-			for (i=0; i<response.friends.length; i++){
-				console.log("Loop" + i);
+			for (var i=0; i<response.friends.length; i++){
 				htmlCode += ""+
 				'<div data-role="content">'+
 					'<div style="" data-controltype="image">'+

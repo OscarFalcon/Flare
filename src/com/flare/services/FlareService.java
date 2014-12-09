@@ -2,7 +2,6 @@ package com.flare.services;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
 import com.flare.database.MySQL;
 
 public class FlareService
