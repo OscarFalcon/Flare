@@ -45,7 +45,7 @@ function getCreatedEvents(){
 					htmlCode += '</div>' +
 					'<hr style="height:3px; background-color:#ccc; border:0; margin-top:12px; margin-bottom:12px;">';
 			}
-			if(id){
+			if(friendID){
 				document.getElementById("createdEventsBackButton").setAttribute("onclick", "redirectTo('profile?friend_id="+friendID+"');");
 			}
 			document.getElementById("events").innerHTML = htmlCode;
