@@ -16,8 +16,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class MySQL {
 	
-	private  static java.sql.Connection connection = null;
-	private  static BasicDataSource dataSource = null;
+    private  static java.sql.Connection connection = null;
+    private  static BasicDataSource dataSource = null;
 
     
     public static final int BIG_DECIMAL = 0;
