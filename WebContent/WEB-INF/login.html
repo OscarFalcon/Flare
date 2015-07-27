@@ -3,62 +3,86 @@
 <head>
   <meta charset="utf-8">
   <title>Flare</title>
+  <!--  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <link href="css/codiqa.ext.min.css" rel="stylesheet">
-  <link href="css/jquery.mobile-1.3.1.min.css" rel="stylesheet">
-  <link href="css/flare.css" rel="stylesheet">
-
+-->
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <script src="/js/flare-utils.js"></script>
-
-
-  <script src="js/jquery-1.9.1.min.js"></script>
-  <script src="js/jquery.mobile-1.3.1.min.js"></script>
-  <script src="js/codiqa.ext.min.js"></script>
-  <script src="js/flare-utils"></script>
   <script src="/js/login.js"></script>
   <script src="/js/userSession.js"></script>
-  
- <meta charset=utf-8 />
+
+
  
 </head>
 <body>
-	<!--  ****************************** WHERE LOGIN PAGE BEGINS ************************* -->
-	  <div data-role="page" data-control-title="Login" data-theme="b" id="page1">
-	      <div data-role="content">
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="login">
+  				<img alt="Flare" src="img/flare_final.png" width="75" height="30">
+  		  </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+          	<div id="error"></div>
+            <div class="form-group">
+              <input type="text" placeholder="Username" class="form-control" name="usernameField" id="usernameField">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control" name="passwordField" id="passwordField">
+            </div>
+            <input class="btn btn-default btn-primary" type="button" value="login" onclick="validateForm()">
+            <button type="button" class="btn btn-link btn-sm" onclick="redirectTo('RecoverAccount')">Forgot password?</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+    </br></br>
+    
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Welcome to <img style="width: 200px; height: 75px" src="img/flare_final.png"></h1>
+        <p>Flare is a unique website and mobile application that will help you connect with social groups and clubs in your university area. Sign up now to try it out for free!</p>
+        <p><button type="button" class="btn btn-primary btn-lg" onclick="redirectTo('signup')">Sign Up</button></p>
+      </div>
+    </div>
+    
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-md-4">
+    			<img src="img/Front_boot.png" class="img-responsive" alt="Responsive image">
+    		</div>
+
+    		<div class="col-md-4">
+    			<img src="img/javaEE_logo.png" class="img-responsive center-block" alt="Responsive image" width="250" height="250">
+    			<img src="img/wildfly_logo.png" class="img-responsive center-block" alt="Responsive image" width="250" height="250">
+    		</div>
+    		<div class="col-md-4">
+    			<img src="img/mysql_logo.png" class="img-responsive center-block" alt="Responsive image" width="250" height="250">
+    		</div>
+    	</div>
+    	
+    </div>
+    
+	<hr>
+
+	<footer>
+		<div class="container"> 
+			<button type="button" class="btn btn-link" onclick="redirectTo('signup')">Sign Up</button>
+			<button type="button" class="btn btn-link" onclick="redirectTo('RecoverAccount')">Forgot password?</button>
+		</div>
+	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 	
-	      
-	          <div style="" data-controltype="image">
-	              <center><img style="width: 200px; height: 75px" src="img/flare_final.png"></center>
-	          </div>
-	          	  <center><div id="error"></div></center>
-		          <div data-role="fieldcontain" data-controltype="textinput">
-		              <center><input name="usernameField" id="usernameField" placeholder="Username" value=""
-		              type="text"></center>
-		          </div>
-		          <div data-role="fieldcontain" data-controltype="textinput">
-		              <center><input name="passwordField" id="passwordField" placeholder="Password" value=""
-		              type="password"></center>
-		          </div>
-		          <input type="button" data-icon="arrow-r" data-iconpos="right" value="login" onclick="validateForm()"
-	          		data-mini="true">
-	      </div>
-	      <div data-theme="a" data-role="footer" data-position="fixed">
-	          <div>
-	              <a onclick="redirectTo('signup')">
-	                  <font color="lightblue">Sign up for flare</font>
-	              </a>
-	          </div>
-	          <div>
-	        
-	              <a onclick="redirectTo('RecoverAccount')">
-	                  <font color="lightblue">Can't Sign In?</font>
-	              </a>
-	          </div>
-	      </div>
-	  </div>
-	  <!--  ************************ WHERE LOGIN PAGE ENDS ******************************* -->
 </body>
 </html>

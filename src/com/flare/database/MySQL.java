@@ -38,6 +38,10 @@ public class MySQL {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setInitialSize(1); 	// sets the initial amount of connections. **/
 		dataSource.setMaxTotal(1); 		//Sets the maximum total number of idle and borrows connections that can be active at the same time. **/
+		
+		
+		dataSource.setUrl("jdbc:mysql://localhost:3306/flare?" +
+				"user=flare&password=flare-sql-password");
 	 }
 	 
 	 
@@ -53,8 +57,7 @@ public class MySQL {
 	 
 	 public static void setPassword(String password)
 	 {
-		 dataSource.setPassword(password);
-		
+		 dataSource.setPassword(password);	
 	 }
 	 
 		

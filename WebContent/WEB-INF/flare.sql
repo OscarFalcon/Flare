@@ -19,8 +19,6 @@ CREATE TABLE person
 	profile_picture varchar(32),aboutme varchar(4096)
 );
 
-
-
 CREATE TABLE event
 (
 	id int unsigned primary key not null AUTO_INCREMENT,
@@ -34,8 +32,6 @@ CREATE TABLE event
 	FOREIGN KEY(user_id) REFERENCES person(user_id)
 );
  
-
-
 CREATE TABLE friends
 (	user_id int unsigned not null,
 	friend_id int unsigned not null,

@@ -14,13 +14,13 @@ function createAccount()
 	
 	if(username == '' || email == '' || password == '' || verify == '' || firstname == '' || lastname == '')
 	{
-		document.getElementById('error').innerHTML="<font color=\"red\">Missing information </font>";
+		document.getElementById('error2').innerHTML="<font color=\"red\">Missing information </font>";
 		return false;
 	}
 	
 	if(password != verify )
 	{
-		document.getElementById('error').innerHTML="<font color=\"red\">Passwords do not match</font>";
+		document.getElementById('error2').innerHTML="<font color=\"red\">Passwords do not match</font>";
 		return false;
 	}
 	
@@ -45,16 +45,16 @@ function createAccount()
 	   
 		if(status == 200 && response == "true")
 		{
-			document.getElementById('error').innerHTML="<font color=\"green\">Created Account!</font>";
+			document.getElementById('error2').innerHTML="<font color=\"green\">Created Account!</font>";
 			alert("Created Account!")
-			document.getElementById('error').innerHTML="<font color=\"green\">Redirecting to login page.. </font>";
+			document.getElementById('error2').innerHTML="<font color=\"green\">Redirecting to login page.. </font>";
 			sleep(1000);
 			window.location.replace("http://localhost:8080/login");
 		   		  
 		}
 		else
 		{
-			document.getElementById('error').innerHTML="<font color=\"red\">Failed to create account </font>";
+			document.getElementById('error2').innerHTML="<font color=\"red\">Failed to create account </font>";
 		}
 	   
 	}

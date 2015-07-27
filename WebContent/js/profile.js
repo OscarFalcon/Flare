@@ -28,7 +28,7 @@ function getProfile(){
 	console.log("parameter Does not exist");
 	document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
 	document.getElementById("profilePicture").setAttribute("onerror","if (this.src != '/Profile/error.jpg') this.src='/Profile/error.jpg';")
-	document.getElementById("profileName").innerHTML = sessionStorage.firstname + " " + sessionStorage.lastname;
+	document.getElementById("profileNa   me").innerHTML = sessionStorage.firstname + " " + sessionStorage.lastname;
 	document.getElementById("profileEmail").innerHTML = sessionStorage.email;
 	document.getElementById("profileAboutMe").innerHTML = sessionStorage.aboutme;
 	console.log("success!");
