@@ -9,6 +9,7 @@
 
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/flare.css" rel="stylesheet">
   <script src="/js/userSession.js"></script>
   <script src="/js/home.js"></script>
   <script src ="/js/flare-utils.js"></script>  
@@ -37,10 +38,63 @@
   				<li><a href="map">Map</a></li>
   				<li><a href="discover">Discover</a></li>
   			</ul>
+  			<div id="search" class="col-sm-4 col-xs-8 col-lg-3">
+  				<select>
+  					<option>Everything</option>
+  					<option>Events</option>
+  					<option>Users</option>
+  				</select>
+  				
+  				<input type="text" placeholder="search">
+  				<span class="glyphicon glyphicon-search"></span>
+  			</div>
   		
   			<ul class="nav navbar-nav navbar-right">
-  				<li><a href="profile" class="profile-img"><img src="http://localhost:8080/Profile/1.jpg" alt="Adrian Martinez" class="img-rounded" width="24" height="24"> MrAdrianM</a></li>
-  				<li><a href="login" onclick="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+  				<li class="dropdown hidden-xs">
+  					<a class="btn dropdown-toggle" data-toggle="dropdown" href="profile">
+  						<span class="glyphicon glyphicon-warning-sign"></span>
+  						<span class="number">0</span>
+  					</a>
+  					<ul class="dropdown-menu notifications">
+  						<li class="dropdown-menu-title" style="min-width:260px">
+  							<span>You have 0 notifications</span>
+  						<li>
+  						<!-- Each notification gets listed here in li format -->
+  					</ul>
+  				</li>
+  			
+  			
+  				<li class="dropdown">
+  					<a class="btn dropdown-toggle" data-toggle="dropdown" href="profile">
+  						<div class="avatar" style="width:60px;float:right;">
+  							<img src="http://localhost:8080/Profile/1.jpg" alt="Adrian Martinez" class="img-rounded" width="40" height="40" style="margin:-13px -10px -14px 10px">
+  						</div>
+  						<div class="user" style="display:inline-block;text-align:left;">
+  							<span class="name">MrAdrianM</span>
+  						</div>
+  					</a>
+  					<ul class="dropdown-menu">
+  						<li>
+  							<a href="profile">
+  								<span class="glyphicon glyphicon-user"></span>
+  								Profile
+  							</a>
+  						</li>
+  						<li>
+  							<a href="profile">
+  								<span class="glyphicon glyphicon-cog"></span>
+  								Settings
+  							</a>
+  						</li>
+  						<li>
+  							<a href="login">
+  								<span class="glyphicon glyphicon-log-out"></span>
+  								Logout
+  							</a>
+  						</li>
+  					</ul>
+  				</li>
+
   			</ul>
   		</div><!-- .nav-collapse -->
   		
