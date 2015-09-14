@@ -1,18 +1,18 @@
 function createAccount()
 {
-	var username=document.getElementById("usernameField").value;
+	var username=document.getElementById("userNameField").value;
 	var email=document.getElementById("emailField").value;
 	var password=document.getElementById("passwordField").value;
 	var verify=document.getElementById("verifyPasswordField").value;
-	var firstname=document.getElementById("firstnameField").value;
-	var lastname=document.getElementById("lastnameField").value;
+	var fullname=document.getElementById("fullNameField").value;
 
 
 
 	console.log("createAccount");
+	console.log("username:"+username+"email:"+email+"password:"+password+"full name:"+fullname);
 
 	
-	if(username == '' || email == '' || password == '' || verify == '' || firstname == '' || lastname == '')
+	if(username == '' || email == '' || password == '' || verify == '' || fullname == '')
 	{
 		document.getElementById('error2').innerHTML="<font color=\"red\">Missing information </font>";
 		return false;
@@ -32,8 +32,7 @@ function createAccount()
 	postData = "username=" + username +
 			   "&password=" + password + 
 			   "&email=" + email + 
-			   "&firstname=" + firstname +
-			   "&lastname=" + lastname;
+			   "&fullname=" + fullname;
 			   
 	var request = new XMLHttpRequest();
 	request.onload = function () {

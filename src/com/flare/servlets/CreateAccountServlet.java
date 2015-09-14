@@ -41,7 +41,7 @@ public class CreateAccountServlet extends GeneralServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username,password,email,firstname,lastname;
+		String username,password,email,fullname;
 		PrintWriter writer = response.getWriter();
 		
 		System.out.println("CreateAccountservlet:POST");
@@ -49,11 +49,11 @@ public class CreateAccountServlet extends GeneralServlet {
 		username = (String) request.getParameter("username");
 		password = (String) request.getParameter("password");
 		email    = (String) request.getParameter("email");
-		firstname = (String)request.getParameter("firstname");
-		lastname = (String)request.getParameter("lastname");
+		fullname = (String)request.getParameter("fullname");
+
 		
 		
-		if(username == null || password == null || email == null || firstname == null || lastname == null)
+		if(username == null || password == null || email == null || fullname == null)
 		{
 			System.out.println("null parameters");
 			return;
@@ -65,8 +65,7 @@ public class CreateAccountServlet extends GeneralServlet {
 		arguments[0] = username;
 		arguments[1] = email;
 		arguments[2] = password;
-		arguments[3] = firstname;
-		arguments[4] = lastname;
+		arguments[3] = fullname;
 		
 		if(MySQL.execute(mysql_string, arguments) == false)
 		{

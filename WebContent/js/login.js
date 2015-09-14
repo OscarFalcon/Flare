@@ -42,16 +42,15 @@ function validateForm()
 			
 		   	console.log("user id:" + person.user[0].userID);
 			console.log("user email: " + person.user[0].eMail);
-			console.log("first name: " + person.user[0].firstName);
-			console.log("last name: " + person.user[0].lastName);
+			console.log("full name: " + person.user[0].fullName);
 			console.log("about me: " + person.user[0].aboutMe);
 			console.log("username: " + user);
 			console.log("Password: " + pass);
 		 //set values for the user
-		   initUser(user, pass, person.user[0].userID, person.user[0].eMail, person.user[0].firstName, person.user[0].lastName, person.user[0].aboutMe);
+		   initUser(user, pass, person.user[0].userID, person.user[0].eMail, person.user[0].fullName, person.user[0].aboutMe);
 		   window.location.replace("http://localhost:8080/home"); // everything was good should
 	   }
-	   else
+	   else 
 	   {
 		   document.getElementById('error').innerHTML="<font color=\"red\">Invalid Credentials</font>";
 	   }

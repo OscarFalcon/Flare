@@ -42,8 +42,7 @@ public class loginServlet extends GeneralServlet {
 		
 		String username;
 		String password;
-		String firstname;
-		String lastname;
+		String fullname;
 		String email;
 		String aboutme;
 		Integer loginCount;
@@ -85,9 +84,9 @@ public class loginServlet extends GeneralServlet {
         	return;
         }
   		
-		String mysql_string = "SELECT user_id, email, first_name, last_name, aboutme FROM person WHERE username = ? && password = ?";
+		String mysql_string = "SELECT user_id, email, full_name, aboutme FROM person WHERE username = ? && password = ?";
 		Object arguments[] = new Object[2];
-		int result_types[] = new int[5];
+		int result_types[] = new int[4];
 		ArrayList<Object[]> results;
 		writer = response.getWriter();
 		
@@ -97,7 +96,6 @@ public class loginServlet extends GeneralServlet {
 		result_types[1] = MySQL.STRING;
 		result_types[2] = MySQL.STRING;
 		result_types[3] = MySQL.STRING;
-		result_types[4] = MySQL.STRING;
 
 		results = MySQL.executeQuery(mysql_string, arguments, result_types);
 		
@@ -116,25 +114,22 @@ public class loginServlet extends GeneralServlet {
 		{
 			String id = Integer.toString((int)results.get(0)[0]);
 			email = (String) results.get(0)[1];
-			firstname = (String) results.get(0)[2];
-			lastname = (String) results.get(0)[3];
-			aboutme = (String) results.get(0)[4];
+			fullname = (String) results.get(0)[2];
+			aboutme = (String) results.get(0)[3];
 			
 			session.setAttribute("loginCount",0);
 			session.setAttribute("loggedIn",true);
 			session.setAttribute("username",username);
 			session.setAttribute("password", password);
 			session.setAttribute("user_id",id);
-			session.setAttribute("firstname", firstname);
-			session.setAttribute("lastname", lastname);
+			session.setAttribute("fullname", fullname);
 			session.setAttribute("email", email);
 			session.setAttribute("aboutme", aboutme);
 			
 
 			// Populating JSON Object
 			json += "{ \"userID\":" + "\"" + id + "\"," +
-					    	"\"firstName\":" + "\""+ firstname + "\"," +
-						    "\"lastName\":" + "\"" + lastname + "\"," +
+					    	"\"fullName\":" + "\""+ fullname + "\"," +
 						    "\"eMail\":" + "\"" + email + "\"," +
 		    				"\"aboutMe\":" + "\"" + aboutme +"\"" + "}]}";
 

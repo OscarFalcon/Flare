@@ -71,7 +71,7 @@ public class EditProfileServlet extends BaseServlet {
 				+ File.separator + "git" +File.separator + "Flare" +File.separator + "WebContent" + File.separator + "Profile";
 		
 		
-		Object arguments[] = new Object[6];
+		Object arguments[] = new Object[5];
 		System.out.println("EditProfileServlet:POST");
 		
 		if(request == null)
@@ -88,7 +88,7 @@ public class EditProfileServlet extends BaseServlet {
 		Iterator<Part> parts = request.getParts().iterator();
 		
 		try{
-			for(int i=0; i<6; i++)
+			for(int i=0; i<5; i++)
 			{
 				if(parts.hasNext() == false)
 				{
@@ -110,17 +110,14 @@ public class EditProfileServlet extends BaseServlet {
 					case "email":
 						arguments[0] = value;
 						break;
-					case "firstName":
+					case "fullname":
 						arguments[1] = value;
 						break;
-					case "lastName":
+					case "aboutme":
 						arguments[2] = value;
 						break;
-					case "aboutme":
-						arguments[3] = value;
-						break;
 					case "password":
-						arguments[4] = value;
+						arguments[3] = value;
 						break;	
 					
 					}
@@ -138,9 +135,9 @@ public class EditProfileServlet extends BaseServlet {
 			e.printStackTrace();
 		}
 		
-		arguments[5] = userID;
+		arguments[4] = userID;
 		
-		String updateProfile = "UPDATE person SET email = ?, first_name = ?, last_name = ?"
+		String updateProfile = "UPDATE person SET email = ?, full_name = ?"
 							+ ", aboutme = ?, password = ? WHERE user_id = ?";
 		
 		boolean result;
@@ -192,13 +189,4 @@ public class EditProfileServlet extends BaseServlet {
 		}		
 	}
 	
-	
-	
-	
-	   
-	   
-	
-	
-	
-
 }

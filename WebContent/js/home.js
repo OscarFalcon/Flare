@@ -1,5 +1,14 @@
 
-function getEvents(){
+function getHomeFeed(){
+	
+	document.getElementById("navProfilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
+	document.getElementById("navUsername").innerHTML = sessionStorage.username;
+	
+	document.getElementById("profilePicture").src = "http://localhost:8080/Profile/"+sessionStorage.userID +".jpg";
+	document.getElementById("profilePicture").setAttribute("onerror","if (this.src != '/Profile/error.jpg') this.src='/Profile/error.jpg';")
+	document.getElementById("profileUsername").innerHTML = sessionStorage.username;
+	document.getElementById("profileName").innerHTML = sessionStorage.fullname;
+	
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function () 
 	{

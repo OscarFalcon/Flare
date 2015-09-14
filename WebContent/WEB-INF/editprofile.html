@@ -68,11 +68,11 @@
   				<li class="dropdown">
   					<a class="btn dropdown-toggle" data-toggle="dropdown" href="profile">
   						<div class="avatar" style="width:60px;float:right;">
-  							<img src="http://localhost:8080/Profile/1.jpg" alt="Adrian Martinez" class="img-rounded" width="40" height="40" style="margin:-13px -10px -14px 10px">
+  							<img id="navProfilePicture" src="http://localhost:8080/Profile/error.jpg" alt="Adrian Martinez" class="img-rounded" width="40" height="40" style="margin:-13px -10px -14px 10px">
   						</div>
   						
   						<div class="user" style="display:inline-block;text-align:left;">
-  							<span class="name">MrAdrianM</span>
+  							<span id="navUsername" class="name"></span>
   						</div>
   					</a>
   					<ul class="dropdown-menu">
@@ -109,23 +109,21 @@
   		<div class="col-sm-3 left-profile-column">
   			<div class="row">
   				<div class="col-xs-7 col-sm-12">
-  					<img class="profile-image" src="http://localhost:8080/Profile/1.jpg" alt="image">
+  					<img id="profilePicture" class="profile-image" src="http://localhost:8080/Profile/error.jpg" alt="image">
+  					<span><input type='file' id="myfile" name="myfile" onchange="setPhotoHTML(this,'profilePicture')" /></span>
   				</div>
   				 
   				<div class="col-xs-5 col-sm-12">
-  					<input class="btn btn-primary btn-lg" style="margin-top:10px;" value="Submit" onclick="editProfile()">
+  					<input type="button" class="btn btn-primary btn-lg" style="margin-top:10px;" value="Submit" onclick="editProfile()">
+  					<div id="error"></div>
   					<ul class="profile-details" style="margin-top:10px;padding:5px 5px;list-style:none;color:#7c848d;">
-  						<li><a id="ProfileName" href="profile" style="font-size:20px">Adrian Martinez</a></li>
-  						<li><a id="ProfileUsername" href="profile">MrAdrianM</a></li>
-  						<li><p id="profileEmail">
-                    		adrian@email.com
-                		</p></li>
+  						<li><input id="profileNameField" type="text"></input></li>
+  						<li><a id="profileUsername" href="profile"></a></li>
+  						<li><input name="" id="emailField" placeholder=""></input></li>
                 		
   						<li>
   							<div>
-  								<p id="profileAboutMe">
-                					I am a student at UTSA and I love to party! :)
-            					</p>
+  								<input name="" id="aboutmeField" type="text">
   							</div>
   						</li>
   					</ul>

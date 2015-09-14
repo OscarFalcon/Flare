@@ -7,13 +7,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/flare.css" rel="stylesheet">
   <script src="/js/userSession.js"></script>
   <script src ="/js/flare-utils.js"></script>
   <script src="/js/profile.js"></script>
+  
+  
  
 </head>
 <body onload="getProfile()">
@@ -37,7 +38,7 @@
   				<li><a href="map">Map</a></li>
   				<li><a href="discover">Discover</a></li>
   			</ul>
-  			<div id="search" class="col-sm-4 col-xs-8 col-lg-3">
+  			<div id="search" class="col-sm-3 col-xs-7 col-lg-3">
   				<select>
   					<option>Everything</option>
   					<option>Events</option>
@@ -66,10 +67,10 @@
   				<li class="dropdown">
   					<a class="btn dropdown-toggle" data-toggle="dropdown" href="profile">
   						<div class="avatar" style="width:60px;float:right;">
-  							<img src="http://localhost:8080/Profile/1.jpg" alt="Adrian Martinez" class="img-rounded" width="40" height="40" style="margin:-13px -10px -14px 10px">
+  							<img id="navProfilePicture" src="http://localhost:8080/Profile/error.jpg" alt="Adrian Martinez" class="img-rounded" width="40" height="40" style="margin:-13px -10px -14px 10px">
   						</div>
   						<div class="user" style="display:inline-block;text-align:left;">
-  							<span class="name">MrAdrianM</span>
+  							<span id="navUsername" class="name"></span>
   						</div>
   					</a>
   					<ul class="dropdown-menu">
@@ -106,20 +107,20 @@
   		<div class="col-sm-3 left-profile-column">
   			<div class="row">
   				<div class="col-xs-7 col-sm-12">
-  					<img class="profile-image" src="http://localhost:8080/Profile/1.jpg" alt="image">
+  					<img id="profilePicture" class="profile-image" src="http://localhost:8080/Profile/error.jpg" alt="image">
   				</div>
   				<div class="col-xs-5 col-sm-12">
   					<ul class="profile-details" style="margin-top:10px;padding:5px 5px;list-style:none;color:#7c848d;">
-  						<li><a id="ProfileName" href="profile" style="font-size:20px">Adrian Martinez</a></li>
-  						<li><a id="ProfileUsername" href="profile">MrAdrianM</a></li>
+  						<li><a id="profileName" href="profile" style="font-size:20px"></a></li>
+  						<li><a id="profileUsername" href="profile"></a></li>
   						<li><p id="profileEmail">
-                    		adrian@email.com
+                    		
                 		</p></li>
                 		
   						<li>
   							<div>
   								<p id="profileAboutMe">
-                					I am a student at UTSA and I love to party! :)
+                					
             					</p>
   							</div>
   						</li>
@@ -138,16 +139,16 @@
   				</div>
   			</div>
   		</div>
-  		<div class="col-sm-9">
+  		<div class="col-sm-6">
   			<ul class="nav nav-tabs" id="myTab">
   				<li class="active">
-  					<a href="profile#feed">Feed</a>
+  					<a href="#feed" data-toggle="tab">Feed</a>
   				</li>
-  				<li class>
-  					<a href="profile#friends">Friends</a>
+  				<li >
+  					<a href="#friends" data-toggle="tab">Friends</a>
   				</li>
-  				<li class>
-  					<a href="profile#myEvents">My Events</a>
+  				<li >
+  					<a href="#events" data-toggle="tab">Events</a>
   				</li>
   			</ul>
   			<div class="tab-content">
@@ -157,7 +158,7 @@
   				<div class="tab-pane" id="friends">
   					Currently have no friends
   				</div>
-  				<div class="tab-pane" id="myEvents">
+  				<div class="tab-pane" id="events">
   					Currently have no Events
   				</div>
   			</div>

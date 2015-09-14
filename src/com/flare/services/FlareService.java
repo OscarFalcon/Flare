@@ -200,11 +200,11 @@ public static String getEvents(int user_id)
 
 public static String getFriends(int user_id)
 {
-	String mysql = "SELECT person.user_id, person.username, person.email,person.first_name,person.last_name,"
+	String mysql = "SELECT person.user_id, person.username, person.email,person.full_name,"
 				   + "person.aboutme FROM friends INNER JOIN person ON person.user_id = friends.friend_id "
 				   + "WHERE friends.user_id = ?";
 	Object[] arguments = {user_id};
-	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
+	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
 	
 	ArrayList<Object[]> results = MySQL.executeQuery(mysql, arguments, result_types);
 	
@@ -213,7 +213,7 @@ public static String getFriends(int user_id)
 		return null;
 	}
 	
-	String friend_id, username,email,firstName,lastName,aboutMe;
+	String friend_id, username,email,fullName,aboutMe;
 	
 	StringBuilder json = new StringBuilder("{\"friends\":[");
 	int size = results.size();
@@ -223,15 +223,13 @@ public static String getFriends(int user_id)
 		friend_id = (String) row[0];
 		username = (String) row[1];
 		email = (String) row[2];
-		firstName = (String) row[3];
-		lastName = (String) row[4];
-		aboutMe = (String) row[5];
+		fullName = (String) row[3];
+		aboutMe = (String) row[4];
 		
 		String line = "{\"friend_id\":" + "\""+friend_id+"\"," +
 				"\"username\":" + "\""+username + "\"," +
 				"\"email\":" + "\""+email + "\"," +
-				"\"firstName\":" + "\""+firstName +"\"," +
-				"\"lastName\":" + "\""+lastName + "\"," +
+				"\"fullName\":" + "\""+fullName +"\"," +
 				"\"aboutMe\":" + "\"" + aboutMe  + "\"" + 
 				"}";
 		
@@ -249,10 +247,10 @@ public static String getFriends(int user_id)
 
 public static String getAllUsers(int user_id)
 {
-	String mysql = "SELECT user_id, username, email,first_name,last_name,"
+	String mysql = "SELECT user_id, username, email,full_name,"
 				   + "aboutme FROM person where user_id != ?";
 	Object[] arguments = {user_id};
-	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
+	int[] result_types = {MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING,MySQL.STRING};
 	
 	ArrayList<Object[]> results = MySQL.executeQuery(mysql, arguments, result_types);
 	
@@ -261,7 +259,7 @@ public static String getAllUsers(int user_id)
 		return null;
 	}
 	
-	String friend_id, username,email,firstName,lastName,aboutMe;
+	String friend_id, username,email,fullName,aboutMe;
 	
 	StringBuilder json = new StringBuilder("{\"friends\":[");
 	int size = results.size();
@@ -271,15 +269,13 @@ public static String getAllUsers(int user_id)
 		friend_id = (String) row[0];
 		username = (String) row[1];
 		email = (String) row[2];
-		firstName = (String) row[3];
-		lastName = (String) row[4];
-		aboutMe = (String) row[5];
+		fullName = (String) row[3];
+		aboutMe = (String) row[4];
 		
 		String line = "{\"friend_id\":" + "\""+friend_id+"\"," +
 				"\"username\":" + "\""+username + "\"," +
 				"\"email\":" + "\""+email + "\"," +
-				"\"firstName\":" + "\""+firstName +"\"," +
-				"\"lastName\":" + "\""+lastName + "\"," +
+				"\"firstName\":" + "\""+fullName +"\"," +
 				"\"aboutMe\":" + "\"" + aboutMe  + "\"" + 
 				"}";
 		
